@@ -11,18 +11,10 @@ export const router = createBrowserRouter([
   },
   {
     path: ROUTES.REGISTRATION,
-    element: (
-      <Layout>
-        <RegistrationPage />
-      </Layout>
-    ),
+    element: <Layout children={<RegistrationPage />} />,
   },
   {
     path: ROUTES.LOGIN,
-    element: (
-      <Layout>
-        <LoginPage />
-      </Layout>
-    ),
+    element: <Layout children={<LoginPage />} />,
   },
 ]);
