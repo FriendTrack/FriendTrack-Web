@@ -1,3 +1,4 @@
+import usePathname from "@/hooks/usePathname";
 import { ROUTES } from "@/lib/constants/router";
 import React, { ReactNode } from "react";
 import NavItem from "./NavItem";
@@ -8,6 +9,7 @@ import Analysis from "/assets/drawerSVGs/trending-up.svg";
 import Top from "/assets/drawerSVGs/trophy.svg";
 
 const Layout: React.FC<{ children: ReactNode }> = ({ children }) => {
+  const { page, setPage } = usePathname();
   return (
     <main className="w-screen h-screen flex flex-col lg:flex-row">
       <aside className="w-full h-full lg:w-2/12 flex fixed flex-col text-gray-400  bg-[#27293b] p-3">
@@ -16,8 +18,13 @@ const Layout: React.FC<{ children: ReactNode }> = ({ children }) => {
         </h2>
         <div className="w-11/12 self-center text-end mt-5 text-lg">name</div>
         <div className="w-11/12 h-[2px] self-center bg-white mt-2"></div>
-        <ul className="flex lg:flex-col items-center text-sm mt-4">
-          <NavItem to={ROUTES.FORM} imgSrc={Form}>
+        <ul className="flex lg:flex-col items-center text-sm mt-4 gap-3">
+          <NavItem
+            current={page === ROUTES.FORM}
+            onClick={() => setPage(ROUTES.FORM)}
+            to={ROUTES.FORM}
+            imgSrc={Form}
+          >
             <span>Заполнить форму</span>
           </NavItem>
           <NavItem to={ROUTES.FORM} imgSrc={Top}>
