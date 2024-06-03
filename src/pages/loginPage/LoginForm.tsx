@@ -9,15 +9,20 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@radix-ui/react-label";
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const LoginForm: React.FC<{ className?: string }> = ({ className }) => {
+  const navigate = useNavigate();
+  const onLoginClick = () => {
+    navigate("/");
+  };
   return (
     <Card className={className}>
       <CardHeader>
         <CardTitle>Вход</CardTitle>
       </CardHeader>
       <CardContent>
-        <form>
+        <form id="login_form" onSubmit={() => onLoginClick()}>
           <Label htmlFor="email">Email</Label>
           <Input type="email" placeholder="email" id="email" />
           <Label htmlFor="password" className="block mt-3">
@@ -27,7 +32,9 @@ const LoginForm: React.FC<{ className?: string }> = ({ className }) => {
         </form>
       </CardContent>
       <CardFooter>
-        <Button className="w-full md:w-auto">Войти</Button>
+        <Button form="login_form" className="w-full md:w-auto">
+          Войти
+        </Button>
       </CardFooter>
     </Card>
   );

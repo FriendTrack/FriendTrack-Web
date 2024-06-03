@@ -1,8 +1,8 @@
 import { ROUTES } from "@/lib/constants/router";
+import FormPage from "@/pages/formPage/FormPage";
 import Layout from "@/pages/layout/Layout";
 import LoginPage from "@/pages/loginPage/LoginPage";
 import RegistrationPage from "@/pages/registrationPage/RegistrationPage";
-import FormPage from "@/pages/formPage/FormPage";
 import { createBrowserRouter } from "react-router-dom";
 
 export const router = createBrowserRouter([
@@ -12,11 +12,11 @@ export const router = createBrowserRouter([
   },
   {
     path: ROUTES.REGISTRATION,
-    element: <Layout children={<RegistrationPage />} />,
+    element: <RegistrationPage />,
   },
   {
     path: ROUTES.LOGIN,
-    element: <Layout children={<LoginPage />} />,
+    element: <LoginPage />,
   },
   {
     path: ROUTES.FORM,
