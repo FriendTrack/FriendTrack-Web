@@ -22,4 +22,16 @@ export const router = createBrowserRouter([
     path: ROUTES.FORM,
     element: <Layout children={<FormPage />} />,
   },
+  {
+    path: ROUTES.RATING,
+    element: <Layout children={<div>rating</div>} />,
+  },
+  {
+    path: ROUTES.ANALYTIC,
+    element: <Layout children={<>analytic</>} />,
+  },
+  {
+    path: ROUTES.FIND,
+    element: <Layout children={<>find</>} />,
+  },
 ]);

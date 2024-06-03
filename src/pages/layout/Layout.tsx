@@ -11,8 +11,8 @@ import Top from "/assets/drawerSVGs/trophy.svg";
 const Layout: React.FC<{ children: ReactNode }> = ({ children }) => {
   const { page, setPage } = usePathname();
   return (
-    <main className="w-screen h-screen flex flex-col lg:flex-row">
-      <aside className="w-full h-full lg:w-2/12 flex fixed flex-col text-gray-400  bg-[#27293b] p-3">
+    <main className="max-w-screen min-h-screen flex flex-col lg:flex-row">
+      <aside className="w-full min-h-screen lg:w-2/12 flex flex-col text-gray-400  bg-[#27293b] p-3">
         <h2 className="text-center text-2xl text-white font-semibold">
           Friends Tracker
         </h2>
@@ -27,13 +27,28 @@ const Layout: React.FC<{ children: ReactNode }> = ({ children }) => {
           >
             <span>Заполнить форму</span>
           </NavItem>
-          <NavItem to={ROUTES.FORM} imgSrc={Top}>
-            <span>Мой рейтинг друзей</span>
+          <NavItem
+            current={page === ROUTES.RATING}
+            onClick={() => setPage(ROUTES.RATING)}
+            to={ROUTES.RATING}
+            imgSrc={Top}
+          >
+            <span>Рейтинг друзей</span>
           </NavItem>
-          <NavItem to={ROUTES.FORM} imgSrc={Analysis}>
+          <NavItem
+            current={page === ROUTES.ANALYTIC}
+            onClick={() => setPage(ROUTES.ANALYTIC)}
+            to={ROUTES.ANALYTIC}
+            imgSrc={Analysis}
+          >
             <span>Аналитика</span>
           </NavItem>
-          <NavItem to={ROUTES.FORM} imgSrc={Find}>
+          <NavItem
+            current={page === ROUTES.FIND}
+            onClick={() => setPage(ROUTES.FIND)}
+            to={ROUTES.FIND}
+            imgSrc={Find}
+          >
             <span>Найти друзей</span>
           </NavItem>
         </ul>
@@ -44,7 +59,8 @@ const Layout: React.FC<{ children: ReactNode }> = ({ children }) => {
           </NavItem>
         </ul>
       </aside>
-      {children}
+
+      <div className="w-full flex justify-center items-center">{children}</div>
     </main>
   );
 };

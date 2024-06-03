@@ -17,15 +17,12 @@ const NavItem = ({
   onClick,
 }: NavItemProps) => {
   return (
-    <li
-      className={`w-full p-3 rounded-md cursor-pointer hover:bg-[#0f1126] hover:text-white transition-colors ${
-        current ? "bg-[#0f1126] text-white" : ""
-      }`}
-    >
+    <li onClick={onClick} className={`w-full `}>
       <NavLink
         to={to}
-        onClick={onClick}
-        className={`flex items-center justify-items-end gap-3   ${className} `}
+        className={`flex cursor-pointer transition-colors hover:bg-[#0f1126] hover:text-white p-2 rounded-md items-center justify-items-end gap-3 ${
+          current ? "bg-[#0f1126] text-white" : ""
+        }   ${className} `}
       >
         <img src={imgSrc} width={"36px"} alt="..." />
         {children}

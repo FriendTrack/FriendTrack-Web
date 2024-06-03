@@ -7,9 +7,10 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
+import { ROUTES } from "@/lib/constants/router";
 import { Label } from "@radix-ui/react-label";
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
 const RegistrationForm: React.FC<{ className?: string }> = ({ className }) => {
   const navigate = useNavigate();
@@ -44,6 +45,9 @@ const RegistrationForm: React.FC<{ className?: string }> = ({ className }) => {
         <Button form="register_form" className="w-full md:w-auto">
           Зарегистрироваться
         </Button>
+        <div className="text-sm opacity-50 ms-auto">
+          <NavLink to={ROUTES.LOGIN}>Войти</NavLink>
+        </div>
       </CardFooter>
     </Card>
   );
