@@ -20,10 +20,12 @@ const Layout = () => {
     <main className="max-w-screen min-h-screen flex flex-col md:flex-row">
       <div className="w-full md:w-3/12 xl:w-2/12 bg-[#27293b] p-3 flex justify-between items-center">
         <h1 className="text-2xl text-white font-semibold">Friends Tracker</h1>
-        <Button onClick={() => setIsOpen(true)}>Открыть</Button>
+        <Button className="bg-gray-600" onClick={() => setIsOpen(true)}>
+          Открыть
+        </Button>
       </div>
       <aside
-        className={`w-full h-full fixed md:min-h-screen md:w-3/12 xl:w-2/12 flex flex-col text-gray-400  bg-[#27293b] p-3 mb-6 md:mb-0 ${
+        className={`w-full h-full fixed md:min-h-screen md:w-3/12 xl:w-2/12 flex flex-col text-gray-400  bg-[#27293b] p-3 ${
           !isOpen ? "hidden md:flex" : ""
         }`}
       >
@@ -31,7 +33,10 @@ const Layout = () => {
           <h2 className="text-center text-2xl text-white font-semibold">
             Friends Tracker
           </h2>
-          <Button className="md:hidden" onClick={() => setIsOpen(false)}>
+          <Button
+            className="bg-gray-600 md:hidden"
+            onClick={() => setIsOpen(false)}
+          >
             Закрыть
           </Button>
         </div>
