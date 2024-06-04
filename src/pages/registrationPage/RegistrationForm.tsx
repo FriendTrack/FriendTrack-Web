@@ -14,6 +14,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 
 const RegistrationForm: React.FC<{ className?: string }> = ({ className }) => {
   const navigate = useNavigate();
+
   const onRegisterClick = () => {
     navigate("/");
   };
@@ -41,11 +42,11 @@ const RegistrationForm: React.FC<{ className?: string }> = ({ className }) => {
           />
         </form>
       </CardContent>
-      <CardFooter>
+      <CardFooter className="h-full flex-col  gap-3 justify-between md:flex-row">
         <Button form="register_form" className="w-full md:w-auto">
           Зарегистрироваться
         </Button>
-        <div className="text-sm opacity-50 ms-auto">
+        <div className="block text-sm opacity-50 hover:opacity-90 transition-opacity">
           <NavLink to={ROUTES.LOGIN}>Войти</NavLink>
         </div>
       </CardFooter>

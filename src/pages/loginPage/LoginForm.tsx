@@ -32,11 +32,11 @@ const LoginForm: React.FC<{ className?: string }> = ({ className }) => {
           <Input type="password" placeholder="пароль" id="password" />
         </form>
       </CardContent>
-      <CardFooter>
+      <CardFooter className="flex-col  gap-3 justify-between md:flex-row">
         <Button form="login_form" className="w-full md:w-auto">
           Войти
         </Button>
-        <div className="text-sm opacity-50 ms-auto">
+        <div className="block text-sm opacity-50 hover:opacity-90 transition-opacity">
           <NavLink to={ROUTES.REGISTRATION}>Зарегистрироваться</NavLink>
         </div>
       </CardFooter>
