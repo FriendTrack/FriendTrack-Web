@@ -26,7 +26,7 @@ const Layout = () => {
       </div>
       <aside
         className={`w-full h-full fixed md:min-h-screen md:w-3/12 xl:w-2/12 flex flex-col text-gray-400  bg-[#27293b] p-3 ${
-          !isOpen ? "hidden md:flex" : ""
+          !isOpen && "hidden md:flex"
         }`}
       >
         <div className="flex md:block justify-between items-center md:justify-center">
@@ -44,8 +44,9 @@ const Layout = () => {
         <div className="w-11/12 self-center text-end mt-5 text-lg">name</div>
         <AsideDivider />
         <ul className="flex flex-col items-center text-sm mt-4 gap-3">
-          {PAGES.map(({ path, imgSrc, title }) => (
+          {PAGES.map(({ path, imgSrc, title }, index) => (
             <NavItem
+              key={index}
               current={page === path}
               onClick={() => onNavLinkClick(path)}
               to={path}
