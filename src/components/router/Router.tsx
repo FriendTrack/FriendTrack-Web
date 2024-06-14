@@ -3,6 +3,9 @@ import FormPage from "@/pages/formPage/FormPage";
 import Layout from "@/pages/layout/Layout";
 import LoginPage from "@/pages/loginPage/LoginPage";
 import RegistrationPage from "@/pages/registrationPage/RegistrationPage";
+import RatingPage from "@/pages/ratingPage/RatingPage";
+import AnalyticPage from "@/pages/analyticPage/AnalyticPage";
+
 import {
   Route,
   createBrowserRouter,
@@ -15,8 +18,8 @@ const router = createBrowserRouter(
         <Route index element={<>root</>} />
 
         <Route path={ROUTES.FORM} element={<FormPage />} />
-        <Route path={ROUTES.RATING} element={<>rating</>} />
-        <Route path={ROUTES.ANALYTIC} element={<>analytic</>} />
+        <Route path={ROUTES.RATING} element={<RatingPage />} />
+        <Route path={ROUTES.ANALYTIC} element={<AnalyticPage />} />
         <Route path={ROUTES.FIND} element={<>find</>} />
       </Route>
       <Route path={ROUTES.REGISTRATION} element={<RegistrationPage />} />
