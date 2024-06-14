@@ -1,13 +1,11 @@
-import ListElement from "./ListElement";
-
 import {
-  Card,
-  CardContent
-} from "@/components/ui/card";
-
-import { Label } from "@radix-ui/react-label";
-
-import order from "/assets/changeOrder.svg";
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 
 interface friend {
   date: string;
@@ -23,24 +21,31 @@ interface pagination {
 
 interface RatingList {
   friends: friend[];
-  pagination: pagination;
+  pagination?: pagination;
+  className?: string;
 }
 
+const RatingList = ({ friends, pagination, className }: RatingList) => {
+  return (
+    <Table className={className}>
+      <TableHeader>
+        <TableRow>
+          <TableHead>Имя</TableHead>
+          <TableHead>Рейтинг</TableHead>
+          <TableHead className="text-right">Последнее взаимодействие</TableHead>
+        </TableRow>
+      </TableHeader>
+      <TableBody>
+        {friends.map((friend, index) => (
+          <TableRow key={index}>
+            <TableCell>{friend.name}</TableCell>
+            <TableCell>{friend.rating}</TableCell>
+            <TableCell className="text-right">{friend.date}</TableCell>
+          </TableRow>
+        ))}
+      </TableBody>
+    </Table>
+  );
+};
 
-const RatingList: React.FC<RatingList> = (list) => {
-    return (
-      <Card style={{paddingTop:"20px", paddingBottom:"20px"}}>
-          <CardContent className="justify-between" style={{ display: "flex", flexDirection: "row", color:"gray", padding:"10px", textAlign:"center" }}>
-            <div style={{ flex: "30%" }}><Label>Последнее взаимодействие </Label><button><img src={order} style={{position:"relative", top:"5px"}}></img></button></div>
-            <div style={{ flex: "50%" }}><Label>Имя </Label><button><img src={order} style={{position:"relative", top:"5px"}}></img></button></div>
-            <div style={{ flex: "20%" }}><Label>Рейтинг </Label><button><img src={order} style={{position:"relative", top:"5px"}}></img></button></div>
-          </CardContent>
-          {list.friends.map((friend) => (
-              <ListElement date={friend.date} name={friend.name} rating={friend.rating}/>
-            ))
-          }
-      </Card>
-    );
-  };
-  
-  export default RatingList;
+export default RatingList;
