@@ -1,31 +1,85 @@
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Select } from "@/components/ui/select";
+import { useState } from "react";
 
+interface Question {
+  question: string;
+}
+
+const ANSWER_VARIANTS = [
+  {
+    value: "1",
+    label: "Да",
+  },
+  {
+    value: "2",
+    label: "Скорее да",
+  },
+  {
+    value: "3",
+    label: "Нет",
+  },
+  {
+    value: "4",
+    label: "Скорее нет",
+  },
+  {
+    value: "5",
+    label: "Затрудняюсь ответить",
+  },
+];
 const Form = () => {
+  const [openQuestions, setOpenQuestions] = useState(1);
+  const [questions] = useState<Question[]>([
+    { question: "Делились ли вы своими чувствами с этим человеком сегодня?" },
+    { question: "Чувствовали ли вы себя понятым этим человеком сегодня?" },
+    { question: "Чувствовали ли вы поддержку от этого человека?" },
+    { question: "Этот человек делился своими чувствами с вами сегодня?" },
+    { question: "Этот человек был внимателен к вашим потребностям сегодня?" },
+    { question: "Делились ли вы своими чувствами с этим человеком сегодня?" },
+    { question: "Чувствовали ли вы себя понятым этим человеком сегодня?" },
+    { question: "Чувствовали ли вы поддержку от этого человека?" },
+    { question: "Этот человек делился своими чувствами с вами сегодня?" },
+    { question: "Этот человек был внимателен к вашим потребностям сегодня?" },
+  ]);
+
+  const onIncrementQuestion = () => {
+    setOpenQuestions(openQuestions + 1);
+  };
+
   return (
-    <Card className="flex flex-col w-full justify-items-center items-center">
-      <CardHeader>
-        <CardTitle>Name</CardTitle>
-      </CardHeader>
+    <Card className="flex flex-col w-full justify-items-center">
       <CardContent className="w-full">
         <Label>Выберите человека</Label>
         <Select
           options={[
-            { value: "1", label: "person 1" },
-            { value: "2", label: "person 2" },
-            { value: "3", label: "person 3" },
-            { value: "4", label: "person 4" },
+            { value: "1", label: "Никита" },
+            { value: "2", label: "Ваня" },
+            { value: "3", label: "Саша" },
+            { value: "4", label: "Коля" },
           ]}
         />
+
+        {questions.slice(0, openQuestions).map((question, index) => (
+          <div className="mt-3" key={index}>
+            <Label>{question.question}</Label>
+            <Select options={ANSWER_VARIANTS} />
+          </div>
+        ))}
       </CardContent>
-      <CardFooter>Footer</CardFooter>
+      <CardFooter>
+        <Button
+          className="bg-blue-700"
+          onClick={onIncrementQuestion}
+          disabled={openQuestions === questions.length}
+        >
+          {openQuestions === questions.length
+            ? "Добавить вопрос"
+            : "Вопросы закончились"}
+        </Button>
+      </CardFooter>
     </Card>
   );
 };

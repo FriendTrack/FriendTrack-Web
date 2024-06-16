@@ -1,3 +1,4 @@
+import { Button } from "@/components/ui/button";
 import Form from "./Form";
 
 const FormPage = () => {
@@ -6,7 +7,10 @@ const FormPage = () => {
       <h2 className="absolute left-20 top-10 text-3xl font-semibold justify-self-end">
         С кем вы сегодня общались?
       </h2>
-      {/* <FormForm className="w-10/12 col-span-2 md:w-8/12 2xl:w-7/12  justify-self-center" /> */}
+      <Button className="absolute top-10 right-20 text-xl bg-green-600">
+        Завершить анкетирование
+      </Button>
+
       <div className="justify-self-end w-1/3">
         <Form />
       </div>
