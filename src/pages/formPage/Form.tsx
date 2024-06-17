@@ -30,14 +30,14 @@ const ANSWER_VARIANTS = [
     label: "Затрудняюсь ответить",
   },
 ];
-const Form = () => {
+
+interface FormProps {
+  onSave: () => void;
+}
+const Form = ({ onSave }: FormProps) => {
   const [openQuestions, setOpenQuestions] = useState(1);
+  const [isSaved, setIsSaved] = useState(false);
   const [questions] = useState<Question[]>([
-    { question: "Делились ли вы своими чувствами с этим человеком сегодня?" },
-    { question: "Чувствовали ли вы себя понятым этим человеком сегодня?" },
-    { question: "Чувствовали ли вы поддержку от этого человека?" },
-    { question: "Этот человек делился своими чувствами с вами сегодня?" },
-    { question: "Этот человек был внимателен к вашим потребностям сегодня?" },
     { question: "Делились ли вы своими чувствами с этим человеком сегодня?" },
     { question: "Чувствовали ли вы себя понятым этим человеком сегодня?" },
     { question: "Чувствовали ли вы поддержку от этого человека?" },
@@ -50,7 +50,7 @@ const Form = () => {
   };
 
   return (
-    <Card className="flex flex-col w-full justify-items-center">
+    <Card className="flex flex-col w-full justify-items-center cursor-default">
       <CardContent className="w-full">
         <Label>Выберите человека</Label>
         <Select
@@ -64,20 +64,30 @@ const Form = () => {
 
         {questions.slice(0, openQuestions).map((question, index) => (
           <div className="mt-3" key={index}>
-            <Label>{question.question}</Label>
+            <Label className="text-1xl">{question.question}</Label>
             <Select options={ANSWER_VARIANTS} />
           </div>
         ))}
       </CardContent>
       <CardFooter>
         <Button
-          className="bg-blue-700"
+          className="bg-blue-600"
           onClick={onIncrementQuestion}
           disabled={openQuestions === questions.length}
         >
           {openQuestions === questions.length
-            ? "Добавить вопрос"
-            : "Вопросы закончились"}
+            ? "Вопросы закончились"
+            : "Добавить вопрос"}
+        </Button>
+        <Button
+          className="ms-auto bg-green-600"
+          disabled={isSaved}
+          onClick={() => {
+            setIsSaved(true);
+            onSave();
+          }}
+        >
+          Сохранить
         </Button>
       </CardFooter>
     </Card>
