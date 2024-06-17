@@ -4,7 +4,7 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/scrollbar";
-import { Pagination } from "swiper/modules";
+import { Mousewheel, Pagination } from "swiper/modules";
 import { Swiper, SwiperClass, SwiperSlide } from "swiper/react";
 import Form from "./Form";
 
@@ -35,14 +35,15 @@ const FormPage = () => {
   }, []);
 
   const swiperClass = classNames({
-    "w-full h-full": true,
+    "h-full w-full": true,
     "cursor-grab": formsCount > SLIDES_ON_PREVIEW,
     "cursor-grabbing": isGrabbing,
   });
 
   return (
     <Swiper
-      modules={[Pagination]}
+      modules={[Pagination, Mousewheel]}
+      mousewheel
       slidesPerView={SLIDES_ON_PREVIEW}
       pagination={{ clickable: true }}
       onSwiper={(swiper) => {
@@ -51,7 +52,18 @@ const FormPage = () => {
       className={swiperClass}
     >
       {Array.from({ length: formsCount }).map((_, index) => (
-        <SwiperSlide className=" ps-[20px] px-[20px] pt-6" key={index}>
+        <SwiperSlide
+          className="ps-[20px] px-[20px] pt-6"
+          key={index}
+          onMouseDown={() => {
+            setIsGrabbing(true);
+            console.log("down");
+          }}
+          onMouseUp={() => {
+            setIsGrabbing(false);
+            console.log("up");
+          }}
+        >
           <Form onSave={onSaveEachForm} />
         </SwiperSlide>
       ))}

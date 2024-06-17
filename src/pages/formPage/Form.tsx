@@ -50,7 +50,7 @@ const Form = ({ onSave }: FormProps) => {
   };
 
   return (
-    <Card className="flex flex-col w-full justify-items-center cursor-default">
+    <Card className="flex flex-col w-full justify-items-center">
       <CardContent className="w-full">
         <Label>Выберите человека</Label>
         <Select
