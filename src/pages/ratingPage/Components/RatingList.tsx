@@ -6,45 +6,69 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { useState } from "react";
+import { Friend } from "../RatingPage";
+import FriendAnalyticDialog from "./FriendAnalyticDialog";
 
-interface friend {
-  date: string;
-  name: string;
-  rating: string;
-}
-
-interface pagination {
+interface Pagination {
   current: string;
   count: string;
   size: string;
 }
 
 interface RatingList {
-  friends: friend[];
-  pagination?: pagination;
+  friends: Friend[];
+  pagination?: Pagination;
   className?: string;
 }
 
-const RatingList = ({ friends, pagination, className }: RatingList) => {
+const RatingList = ({ friends, className }: RatingList) => {
+  const [selectedFriend, setSelectedFriend] = useState<Friend | null>(null);
+  const [isOpen, setIsOpen] = useState(false);
+
   return (
-    <Table className={className}>
-      <TableHeader>
-        <TableRow>
-          <TableHead>Имя</TableHead>
-          <TableHead>Рейтинг</TableHead>
-          <TableHead className="text-right">Последнее взаимодействие</TableHead>
-        </TableRow>
-      </TableHeader>
-      <TableBody>
-        {friends.map((friend, index) => (
-          <TableRow key={index}>
-            <TableCell>{friend.name}</TableCell>
-            <TableCell>{friend.rating}</TableCell>
-            <TableCell className="text-right">{friend.date}</TableCell>
+    <>
+      <FriendAnalyticDialog
+        isOpen={isOpen}
+        onClose={() => {
+          setIsOpen(false);
+        }}
+        friend={selectedFriend}
+      />
+      <Table className={className}>
+        <TableHeader>
+          <TableRow>
+            <TableHead>Имя</TableHead>
+            <TableHead>Рейтинг</TableHead>
+            <TableHead className="text-right">
+              Последнее взаимодействие
+            </TableHead>
           </TableRow>
-        ))}
-      </TableBody>
-    </Table>
+        </TableHeader>
+        <TableBody>
+          {friends.map((friend, index) => (
+            <TableRow
+              key={index}
+              onClick={() => {
+                setIsOpen(true);
+                setSelectedFriend(friend);
+              }}
+            >
+              <TableCell>{friend.name}</TableCell>
+              <TableCell>
+                {(friend.stats.communication +
+                  friend.stats.empathy +
+                  friend.stats.pastime +
+                  friend.stats.respect +
+                  friend.stats.trust) /
+                  5}
+              </TableCell>
+              <TableCell className="text-right">{friend.date}</TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </>
   );
 };
 
