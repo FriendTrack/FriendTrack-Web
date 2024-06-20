@@ -1,5 +1,5 @@
 import { useGetFriends } from "@/hooks/useGetFriends";
-import RatingList from "./components/RatingList";
+import RatingList from "./Components/RatingList";
 
 export interface Friend {
   id: number;
