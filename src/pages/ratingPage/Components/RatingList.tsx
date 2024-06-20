@@ -48,35 +48,43 @@ const RatingList = ({ friends, className }: RatingList) => {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {friends.map((friend) => (
-            <TableRow
-              key={friend.id}
-              onClick={() => {
-                setIsOpen(true);
-                setSelectedFriend(friend);
-              }}
-            >
-              <TableCell className="flex gap-4 items-center">
-                <ListElementAvatar name={friend.name} src={friend.avatar} />
-                {friend.name}
-              </TableCell>
-              <TableCell>
-                <div className="flex gap-4">
-                  <BarChart3 className="h-4 w-4 opacity-70" />
-                  {(friend.stats.communication +
-                    friend.stats.empathy +
-                    friend.stats.pastime +
-                    friend.stats.respect +
-                    friend.stats.trust) /
-                    5}
-                </div>
-              </TableCell>
+          {friends
+            .slice()
+            .sort((a, b) => a.name.localeCompare(b.name))
+            .map((friend) => (
+              <TableRow
+                key={friend.id}
+                onClick={() => {
+                  setIsOpen(true);
+                  setSelectedFriend(friend);
+                }}
+              >
+                <TableCell>
+                  <div className="flex gap-4 items-center">
+                    <ListElementAvatar name={friend.name} src={friend.avatar} />
+                    {friend.name}
+                  </div>
+                </TableCell>
+                <TableCell>
+                  <div className="flex gap-4">
+                    <BarChart3 className="h-4 w-4 opacity-50" />
+                    {(friend.stats.communication +
+                      friend.stats.empathy +
+                      friend.stats.pastime +
+                      friend.stats.respect +
+                      friend.stats.trust) /
+                      5}
+                  </div>
+                </TableCell>
 
-              <TableCell className="flex justify-end gap-4">
-                <CalendarDays className="h-4 w-4 opacity-70" /> {friend.date}
-              </TableCell>
-            </TableRow>
-          ))}
+                <TableCell>
+                  <div className="flex justify-end gap-4">
+                    <CalendarDays className="h-4 w-4 opacity-50" />
+                    {friend.date}
+                  </div>
+                </TableCell>
+              </TableRow>
+            ))}
         </TableBody>
       </Table>
     </>
