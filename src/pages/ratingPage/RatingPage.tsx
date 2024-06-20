@@ -1,22 +1,31 @@
-import RatingList from "./Components/RatingList";
+import { useGetFriends } from "@/hooks/useGetFriends";
+import RatingList from "./components/RatingList";
+
+export interface Friend {
+  id: number;
+  date: string;
+  name: string;
+  avatar: string;
+  stats: {
+    empathy: number;
+    communication: number;
+    respect: number;
+    pastime: number;
+    trust: number;
+  };
+}
 
 const RatingPage = () => {
+  const { data, isLoading } = useGetFriends();
+
+  if (isLoading || !data) {
+    return <p>Loading...</p>;
+  }
   return (
     <main className="w-full flex flex-col items-center justify-center gap-6">
       <h1 className="text-4xl font-semibold">Рейтинг</h1>
       <div className="w-12/12 sm:w-10/12 xl:w-8/12">
-        <RatingList
-          friends={[
-            { date: "22.02.2023", name: "Никита", rating: "4.95243234" },
-            { date: "22.02.2023", name: "Никита", rating: "4.95243234" },
-            { date: "22.02.2023", name: "Никита", rating: "4.95243234" },
-            { date: "22.02.2023", name: "Никита", rating: "4.95243234" },
-            { date: "22.02.2023", name: "Никита", rating: "4.95243234" },
-            { date: "22.02.2023", name: "Никита", rating: "4.95243234" },
-            { date: "22.02.2023", name: "Никита", rating: "4.95243234" },
-            { date: "22.02.2023", name: "Никита", rating: "4.95243234" },
-          ]}
-        />
+        <RatingList friends={data} />
       </div>
     </main>
   );
