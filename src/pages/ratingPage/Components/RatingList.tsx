@@ -9,6 +9,7 @@ import {
 import { useState } from "react";
 import { Friend } from "../RatingPage";
 import FriendAnalyticDialog from "./FriendAnalyticDialog";
+import ListElementAvatar from "./ListElementAvatar";
 
 interface Pagination {
   current: string;
@@ -54,7 +55,10 @@ const RatingList = ({ friends, className }: RatingList) => {
                 setSelectedFriend(friend);
               }}
             >
-              <TableCell>{friend.name}</TableCell>
+              <TableCell className="flex gap-5 items-center">
+                <ListElementAvatar name={friend.name} src={friend.avatar} />
+                {friend.name}
+              </TableCell>
               <TableCell>
                 {(friend.stats.communication +
                   friend.stats.empathy +

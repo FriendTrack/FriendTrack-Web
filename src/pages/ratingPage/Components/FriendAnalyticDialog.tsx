@@ -2,6 +2,7 @@ import { Dialog, DialogContent, DialogHeader } from "@/components/ui/dialog";
 import { DialogDescription, DialogTitle } from "@radix-ui/react-dialog";
 import { Radar } from "react-chartjs-2";
 import { Friend } from "../RatingPage";
+import ListElementAvatar from "./ListElementAvatar";
 
 interface FriendAnalyticDialogProps {
   isOpen: boolean;
@@ -17,19 +18,25 @@ const FriendAnalyticDialog = ({
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent>
-        <DialogHeader>
-          <DialogTitle className="text-lg font-semibold">
-            {friend?.name}
-          </DialogTitle>
-          <DialogDescription className="text-sm text-slate-500">
-            <span>Средний рейтинг: </span>
-            {(friend?.stats?.communication! +
-              friend?.stats?.empathy! +
-              friend?.stats?.pastime! +
-              friend?.stats?.respect! +
-              friend?.stats?.trust!) /
-              5}
-          </DialogDescription>
+        <DialogHeader className="flex items-end gap-3 flex-row">
+          <ListElementAvatar
+            name={friend?.name[0] || ""}
+            src={friend?.avatar || ""}
+          />
+          <div>
+            <DialogTitle className="text-lg font-semibold">
+              {friend?.name}
+            </DialogTitle>
+            <DialogDescription className="text-sm text-slate-500">
+              <span>Средний рейтинг: </span>
+              {(friend?.stats?.communication! +
+                friend?.stats?.empathy! +
+                friend?.stats?.pastime! +
+                friend?.stats?.respect! +
+                friend?.stats?.trust!) /
+                5}
+            </DialogDescription>
+          </div>
         </DialogHeader>
         <div className="flex gap-6 flex-wrap">
           <Radar

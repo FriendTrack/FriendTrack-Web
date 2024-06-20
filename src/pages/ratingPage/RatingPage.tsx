@@ -3,6 +3,7 @@ import RatingList from "./components/RatingList";
 export interface Friend {
   date: string;
   name: string;
+  avatar: string;
   stats: {
     empathy: number;
     communication: number;
@@ -16,6 +17,7 @@ const FRIENDS_DATA: Friend[] = [
   {
     date: "22.02.2023",
     name: "Никита",
+    avatar: "https://xsgames.co/randomusers/assets/avatars/male/1.jpg",
     stats: {
       communication: 5,
       empathy: 4,
@@ -27,6 +29,7 @@ const FRIENDS_DATA: Friend[] = [
   {
     date: "22.02.2023",
     name: "Вася",
+    avatar: "https://xsgames.co/randomusers/assets/avatars/male/2.jpg",
     stats: {
       communication: 5,
       empathy: 4,
@@ -38,6 +41,7 @@ const FRIENDS_DATA: Friend[] = [
   {
     date: "22.02.2023",
     name: "Саша",
+    avatar: "https://xsgames.co/randomusers/assets/avatars/male/3.jpg",
     stats: {
       communication: 4,
       empathy: 3,
@@ -49,6 +53,7 @@ const FRIENDS_DATA: Friend[] = [
   {
     date: "22.02.2023",
     name: "Коля",
+    avatar: "https://xsgames.co/randomusers/assets/avatars/male/4.jpg",
     stats: {
       communication: 3,
       empathy: 4,
@@ -60,6 +65,7 @@ const FRIENDS_DATA: Friend[] = [
   {
     date: "22.02.2023",
     name: "Женя",
+    avatar: "https://xsgames.co/randomusers/assets/avatars/male/5.jpg",
     stats: {
       communication: 5,
       empathy: 1,
@@ -71,6 +77,7 @@ const FRIENDS_DATA: Friend[] = [
   {
     date: "22.02.2023",
     name: "Кирилл",
+    avatar: "https://xsgames.co/randomusers/assets/avatars/male/6.jpg",
     stats: {
       communication: 5,
       empathy: 2,
@@ -82,6 +89,7 @@ const FRIENDS_DATA: Friend[] = [
   {
     date: "22.02.2023",
     name: "Дима",
+    avatar: "https://xsgames.co/randomusers/assets/avatars/male/7.jpg",
     stats: {
       communication: 5,
       empathy: 2,
@@ -93,6 +101,7 @@ const FRIENDS_DATA: Friend[] = [
   {
     date: "22.02.2023",
     name: "Андрей",
+    avatar: "https://xsgames.co/randomusers/assets/avatars/male/8.jpg",
     stats: {
       communication: 5,
       empathy: 4,
