@@ -22,17 +22,11 @@ import { AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
 import { Check, ChevronsUpDown } from "lucide-react";
 
 import { useState } from "react";
+import { Friend } from "../ratingPage/RatingPage";
 
 interface Question {
   question: string;
 }
-
-const FRIENDS_VARIANTS = [
-  { value: "1", label: "Никита" },
-  { value: "2", label: "Ваня" },
-  { value: "3", label: "Саша" },
-  { value: "4", label: "Коля" },
-];
 
 const ANSWER_VARIANTS = [
   {
@@ -67,13 +61,14 @@ const QUESTIONS: Question[] = [
 
 interface FormProps {
   onSave: () => void;
+  friends: Friend[];
 }
-const Form = ({ onSave }: FormProps) => {
+const Form = ({ onSave, friends }: FormProps) => {
   const [openQuestions, setOpenQuestions] = useState(0);
   const [isSaved, setIsSaved] = useState(false);
 
   const [open, setOpen] = useState(false);
-  const [selectedFriend, setSelectedFriend] = useState("");
+  const [selectedFriend, setSelectedFriend] = useState<Friend | null>();
   const [searchTerm, setSearchTerm] = useState("");
 
   return (
@@ -90,13 +85,13 @@ const Form = ({ onSave }: FormProps) => {
               {selectedFriend ? (
                 <>
                   <Avatar className=" border scale-75 border-gray-400 items-center justify-center mr-2">
-                    <AvatarImage src="" />
-                    <AvatarFallback>{selectedFriend[0]}</AvatarFallback>
+                    <AvatarImage src={selectedFriend.avatar} />
+                    <AvatarFallback>{selectedFriend.name[0]}</AvatarFallback>
                   </Avatar>
                   {
-                    FRIENDS_VARIANTS.find(
-                      (friend) => friend.label === selectedFriend
-                    )?.label
+                    friends.find(
+                      (friend) => friend.name === selectedFriend.name
+                    )?.name
                   }
                 </>
               ) : (
@@ -112,27 +107,25 @@ const Form = ({ onSave }: FormProps) => {
                 <CommandEmpty>Не найдено</CommandEmpty>
                 <CommandGroup>
                   <ScrollArea className="h-[150px]">
-                    {FRIENDS_VARIANTS.map((friend) => (
+                    {friends.map((friend) => (
                       <CommandItem
-                        key={friend.value}
-                        value={friend.label}
+                        key={friend.id}
+                        value={friend.name}
                         onSelect={(currentValue) => {
-                          setSelectedFriend(
-                            currentValue === selectedFriend ? "" : currentValue
-                          );
+                          setSelectedFriend(friend);
                           setSearchTerm("");
                           setOpen(false);
                         }}
                       >
                         <Avatar className="items-center scale-75 border border-gray-400 justify-center me-1">
-                          <AvatarImage src="" />
-                          <AvatarFallback>{friend.label[0]}</AvatarFallback>
+                          <AvatarImage src={friend.avatar} />
+                          <AvatarFallback>{friend.name[0]}</AvatarFallback>
                         </Avatar>
-                        {friend.label}
+                        {friend.name}
                         <Check
                           className={cn(
                             "ms-auto h-5 w-5 mr-1",
-                            selectedFriend === friend.label
+                            selectedFriend?.name === friend.name
                               ? "opacity-100"
                               : "opacity-0"
                           )}

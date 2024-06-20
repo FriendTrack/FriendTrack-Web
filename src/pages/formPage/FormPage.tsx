@@ -1,4 +1,5 @@
 import { useConfirmReloadPage } from "@/hooks/useConfirmReloadPage";
+import { useGetFriends } from "@/hooks/useGetFriends";
 import { cn } from "@/lib/utils";
 import { useEffect, useRef, useState } from "react";
 import "swiper/css";
@@ -10,6 +11,7 @@ import Form from "./Form";
 const SLIDES_ON_PREVIEW = 3;
 const FormPage = () => {
   const [formsCount, setFormsCount] = useState(1);
+  const { data, isLoading } = useGetFriends();
   const swiperRef = useRef<SwiperClass | null>(null);
 
   useConfirmReloadPage();
@@ -20,6 +22,7 @@ const FormPage = () => {
     }
   }, [formsCount]);
 
+  if (isLoading || !data) return <p>Loading...</p>;
   return (
     <Swiper
       modules={[Pagination, Mousewheel]}
@@ -36,7 +39,7 @@ const FormPage = () => {
     >
       {Array.from({ length: formsCount }).map((_, index) => (
         <SwiperSlide className="ps-[20px] px-[20px] pt-6" key={index}>
-          <Form onSave={() => setFormsCount(formsCount + 1)} />
+          <Form friends={data} onSave={() => setFormsCount(formsCount + 1)} />
         </SwiperSlide>
       ))}
     </Swiper>
