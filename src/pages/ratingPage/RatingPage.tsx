@@ -1,3 +1,4 @@
+
 import { useGetFriends } from "@/hooks/useGetFriends";
 import RatingList from "./Components/RatingList";
 
