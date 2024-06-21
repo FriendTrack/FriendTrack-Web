@@ -6,7 +6,12 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { BarChart3, CalendarDays } from "lucide-react";
+import {
+  BarChart3,
+  CalendarDays,
+  TrendingDown,
+  TrendingUp,
+} from "lucide-react";
 import { useState } from "react";
 import { Friend } from "../RatingPage";
 import FriendAnalyticDialog from "./FriendAnalyticDialog";
@@ -48,43 +53,52 @@ const RatingList = ({ friends, className }: RatingList) => {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {friends
-            .slice()
-            .sort((a, b) => a.name.localeCompare(b.name))
-            .map((friend) => (
-              <TableRow
-                key={friend.id}
-                onClick={() => {
-                  setIsOpen(true);
-                  setSelectedFriend(friend);
-                }}
-              >
-                <TableCell>
-                  <div className="flex gap-4 items-center">
-                    <ListElementAvatar name={friend.name} src={friend.avatar} />
-                    {friend.name}
+          {friends.map((friend) => (
+            <TableRow
+              key={friend.id}
+              onClick={() => {
+                setIsOpen(true);
+                setSelectedFriend(friend);
+              }}
+            >
+              <TableCell>
+                <div className="flex gap-4 items-center">
+                  <ListElementAvatar name={friend.name} src={friend.avatar} />
+                  {friend.name}
+                </div>
+              </TableCell>
+              <TableCell>
+                <div className="flex gap-4">
+                  <BarChart3 className="h-4 w-4 opacity-50" />
+                  {friend.stats.avg.toFixed(1)}
+                  <div className="flex gap-1">
+                    {friend.stats.avg - friend.stats.prev_avg > 0 ? (
+                      <div className="text-green-600 flex gap-2">
+                        <TrendingUp className="h-4 w-4 opacity-70" />+
+                        {(friend.stats.avg - friend.stats.prev_avg).toFixed(1)}
+                      </div>
+                    ) : (
+                      friend.stats.avg - friend.stats.prev_avg < 0 && (
+                        <div className="flex gap-2 text-red-600">
+                          <TrendingDown className="h-4 w-4 opacity-70" />
+                          {(friend.stats.avg - friend.stats.prev_avg).toFixed(
+                            1
+                          )}
+                        </div>
+                      )
+                    )}
                   </div>
-                </TableCell>
-                <TableCell>
-                  <div className="flex gap-4">
-                    <BarChart3 className="h-4 w-4 opacity-50" />
-                    {(friend.stats.communication +
-                      friend.stats.empathy +
-                      friend.stats.pastime +
-                      friend.stats.respect +
-                      friend.stats.trust) /
-                      5}
-                  </div>
-                </TableCell>
+                </div>
+              </TableCell>
 
-                <TableCell>
-                  <div className="flex justify-end gap-4">
-                    <CalendarDays className="h-4 w-4 opacity-50" />
-                    {friend.date}
-                  </div>
-                </TableCell>
-              </TableRow>
-            ))}
+              <TableCell>
+                <div className="flex justify-end gap-4">
+                  <CalendarDays className="h-4 w-4 opacity-50" />
+                  {friend.date}
+                </div>
+              </TableCell>
+            </TableRow>
+          ))}
         </TableBody>
       </Table>
     </>

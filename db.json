@@ -11,7 +11,9 @@
         "empathy": 4,
         "pastime": 3,
         "respect": 5,
-        "trust": 4
+        "trust": 4,
+        "avg": 4.2,
+        "prev_avg": 3.7
       }
     },
     {
@@ -24,7 +26,9 @@
         "empathy": 4,
         "pastime": 3,
         "respect": 2,
-        "trust": 1
+        "trust": 1,
+        "avg": 3,
+        "prev_avg": 3.5
       }
     },
     {
@@ -37,7 +41,9 @@
         "empathy": 3,
         "pastime": 2,
         "respect": 3,
-        "trust": 4
+        "trust": 4,
+        "avg": 3.2,
+        "prev_avg": 3.3
       }
     },
     {
@@ -50,7 +56,9 @@
         "empathy": 4,
         "pastime": 1,
         "respect": 5,
-        "trust": 1
+        "trust": 1,
+        "avg": 2.8,
+        "prev_avg": 2.8
       }
     },
     {
@@ -63,7 +71,9 @@
         "empathy": 1,
         "pastime": 2,
         "respect": 5,
-        "trust": 5
+        "trust": 5,
+        "avg": 3.6,
+        "prev_avg": 2.7
       }
     },
     {
@@ -76,7 +86,9 @@
         "empathy": 2,
         "pastime": 2,
         "respect": 5,
-        "trust": 2
+        "trust": 2,
+        "avg": 3.2,
+        "prev_avg": 3.1
       }
     },
     {
@@ -89,7 +101,9 @@
         "empathy": 2,
         "pastime": 3,
         "respect": 1,
-        "trust": 5
+        "trust": 5,
+        "avg": 3.2,
+        "prev_avg": 3.4
       }
     },
     {
@@ -102,7 +116,9 @@
         "empathy": 4,
         "pastime": 5,
         "respect": 3,
-        "trust": 2
+        "trust": 2,
+        "avg": 3.8,
+        "prev_avg": 3.2
       }
     }
   ]

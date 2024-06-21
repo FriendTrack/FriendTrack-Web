@@ -12,6 +12,8 @@ export interface Friend {
     respect: number;
     pastime: number;
     trust: number;
+    avg: number;
+    prev_avg: number;
   };
 }
 
