@@ -1,9 +1,10 @@
 import { Button } from '@/components/ui/button'
 import usePathname from '@/hooks/usePathname'
-import { PAGES, ROUTES } from '@/lib/constants/'
+import { PAGES } from '@/lib/constants/Pages'
+import { ROUTES } from '@/lib/constants/ROUTES'
 import { useState } from 'react'
 import { Outlet } from 'react-router-dom'
-import { AsideDivider, NavItem } from './components'
+import { AsideDivider, NavItem } from './Components'
 import Logout from '/assets/drawerSVGs/logout.svg'
 
 export const Layout = () => {

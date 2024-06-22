@@ -7,7 +7,7 @@ import {
 	CardTitle,
 } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
-import { ROUTES } from '@/lib/constants'
+import { ROUTES } from '@/lib/constants/ROUTES'
 import { Label } from '@radix-ui/react-label'
 import React, { FormEvent, useState } from 'react'
 import ReCAPTCHA from 'react-google-recaptcha'

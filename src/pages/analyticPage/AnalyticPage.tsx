@@ -1,4 +1,4 @@
-import AnalyticWindow from './components/AnalyticWindow'
+import AnalyticWindow from './Components/AnalyticWindow'
 
 export interface QualitiesDevelopment {
 	empathy: number[]

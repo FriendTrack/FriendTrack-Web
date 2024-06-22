@@ -8,7 +8,7 @@ import {
 } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { PostRegistrationBody, postRegistration } from '@/lib/api/requests'
-import { ROUTES } from '@/lib/constants/'
+import { ROUTES } from '@/lib/constants/ROUTES'
 import { Label } from '@radix-ui/react-label'
 import { useMutation } from '@tanstack/react-query'
 import React, { useState } from 'react'

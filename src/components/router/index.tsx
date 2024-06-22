@@ -1,4 +1,4 @@
-import { ROUTES } from '@/lib/constants'
+import { ROUTES } from '@/lib/constants/ROUTES'
 import { AnalyticPage } from '@/pages/analyticPage/AnalyticPage'
 import { FormPage } from '@/pages/formPage/FormPage'
 import { Layout } from '@/pages/layout/Layout'
