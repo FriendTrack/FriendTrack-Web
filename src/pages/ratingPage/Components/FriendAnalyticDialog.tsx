@@ -1,45 +1,39 @@
 import { Dialog, DialogContent, DialogHeader } from '@/components/ui/dialog'
+import { Contact } from '@/lib/api/requests/contact'
 import { DialogDescription, DialogTitle } from '@radix-ui/react-dialog'
-import { Radar } from 'react-chartjs-2'
-import { Friend } from '../RatingPage'
 import ListElementAvatar from './ListElementAvatar'
 
 interface FriendAnalyticDialogProps {
 	isOpen: boolean
 	onClose: () => void
-	friend: Friend | null
+	contact: Contact | null
 }
 
 const FriendAnalyticDialog = ({
 	isOpen,
 	onClose,
-	friend,
+	contact,
 }: FriendAnalyticDialogProps) => {
 	return (
 		<Dialog open={isOpen} onOpenChange={onClose}>
 			<DialogContent>
 				<DialogHeader className='flex items-end gap-3 flex-row'>
 					<ListElementAvatar
-						name={friend?.name[0] || ''}
-						src={friend?.avatar || ''}
+						name={contact?.name[0] || ''}
+						src={contact?.link || ''}
 					/>
 					<div>
 						<DialogTitle className='text-lg font-semibold'>
-							{friend?.name}
+							{contact?.name}
 						</DialogTitle>
 						<DialogDescription className='text-sm text-slate-500'>
 							<span>Средний рейтинг: </span>
-							{(friend?.stats?.communication! +
-								friend?.stats?.empathy! +
-								friend?.stats?.pastime! +
-								friend?.stats?.respect! +
-								friend?.stats?.trust!) /
-								5}
+							{1}
 						</DialogDescription>
 					</div>
 				</DialogHeader>
 				<div className='flex gap-6 flex-wrap'>
-					<Radar
+					{/* <Radar
 						data={{
 							labels: [
 								'Коммуникация',
@@ -74,7 +68,7 @@ const FriendAnalyticDialog = ({
 								},
 							},
 						}}
-					/>
+					/> */}
 				</div>
 			</DialogContent>
 		</Dialog>
