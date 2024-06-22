@@ -69,7 +69,7 @@ export const Form = ({ onSave, friends }: FormProps) => {
 
 	const [open, setOpen] = useState(false)
 	const [selectedFriend, setSelectedFriend] = useState<Friend | null>()
-	const [searchTerm, setSearchTerm] = useState('')
+	const [_, setSearchTerm] = useState('')
 
 	return (
 		<Card className='flex flex-col w-full justify-items-center'>
@@ -109,7 +109,7 @@ export const Form = ({ onSave, friends }: FormProps) => {
 											<CommandItem
 												key={friend.id}
 												value={friend.name}
-												onSelect={currentValue => {
+												onSelect={() => {
 													setSelectedFriend(friend)
 													setSearchTerm('')
 													setOpen(false)
