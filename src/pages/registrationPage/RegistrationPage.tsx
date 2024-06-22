@@ -1,6 +1,6 @@
-import RegistrationForm from './RegistrationForm'
+import { RegistrationForm } from './registrationForm/RegistrationForm'
 
-const RegistrationPage = () => {
+export const RegistrationPage = () => {
 	return (
 		<main className='w-screen h-screen flex flex-col items-center justify-center gap-6'>
 			<h1 className='text-4xl font-semibold'>Friends Tracker</h1>
@@ -10,5 +10,3 @@ const RegistrationPage = () => {
 		</main>
 	)
 }
-
-export default RegistrationPage

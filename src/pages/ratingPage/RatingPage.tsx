@@ -1,5 +1,5 @@
 import { useGetFriends } from '@/hooks/useGetFriends'
-import RatingList from './Components/RatingList'
+import { RatingList } from './components/RatingList'
 
 export interface Friend {
 	id: number
@@ -17,7 +17,7 @@ export interface Friend {
 	}
 }
 
-const RatingPage = () => {
+export const RatingPage = () => {
 	const { data, isLoading } = useGetFriends()
 
 	if (isLoading || !data) {
@@ -32,5 +32,3 @@ const RatingPage = () => {
 		</main>
 	)
 }
-
-export default RatingPage

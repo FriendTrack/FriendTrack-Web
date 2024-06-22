@@ -7,13 +7,13 @@ import {
 	CardTitle,
 } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
-import { ROUTES } from '@/lib/constants/router'
+import { ROUTES } from '@/lib/constants'
 import { Label } from '@radix-ui/react-label'
 import React, { FormEvent, useState } from 'react'
 import ReCAPTCHA from 'react-google-recaptcha'
 import { NavLink, useNavigate } from 'react-router-dom'
 
-const LoginForm: React.FC<{ className?: string }> = ({ className }) => {
+export const LoginForm: React.FC<{ className?: string }> = ({ className }) => {
 	const navigate = useNavigate()
 	const [token, setToken] = useState<string | null>(null)
 	const onLoginClick = (e: FormEvent) => {
@@ -52,5 +52,3 @@ const LoginForm: React.FC<{ className?: string }> = ({ className }) => {
 		</Card>
 	)
 }
-
-export default LoginForm

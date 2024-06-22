@@ -8,7 +8,7 @@ import {
 } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { PostRegistrationBody, postRegistration } from '@/lib/api/requests'
-import { ROUTES } from '@/lib/constants/router'
+import { ROUTES } from '@/lib/constants/'
 import { Label } from '@radix-ui/react-label'
 import { useMutation } from '@tanstack/react-query'
 import React, { useState } from 'react'
@@ -16,7 +16,9 @@ import ReCAPTCHA from 'react-google-recaptcha'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { NavLink, useNavigate } from 'react-router-dom'
 
-const RegistrationForm: React.FC<{ className?: string }> = ({ className }) => {
+export const RegistrationForm: React.FC<{ className?: string }> = ({
+	className,
+}) => {
 	const navigate = useNavigate()
 	const [token, setToken] = useState<string | null>(null)
 	const { register, handleSubmit } = useForm<PostRegistrationBody>()
@@ -98,5 +100,3 @@ const RegistrationForm: React.FC<{ className?: string }> = ({ className }) => {
 		</Card>
 	)
 }
-
-export default RegistrationForm

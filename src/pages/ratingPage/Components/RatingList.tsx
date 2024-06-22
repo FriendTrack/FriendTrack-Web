@@ -24,7 +24,7 @@ interface RatingList {
 	className?: string
 }
 
-const RatingList = ({ friends, className }: RatingList) => {
+export const RatingList = ({ friends, className }: RatingList) => {
 	const [selectedFriend, setSelectedFriend] = useState<Friend | null>(null)
 	const [isOpen, setIsOpen] = useState(false)
 
@@ -98,5 +98,3 @@ const RatingList = ({ friends, className }: RatingList) => {
 		</>
 	)
 }
-
-export default RatingList
