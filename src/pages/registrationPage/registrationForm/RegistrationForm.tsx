@@ -22,12 +22,13 @@ export const RegistrationForm: React.FC<{ className?: string }> = ({
 	const navigate = useNavigate()
 	const [token, setToken] = useState<string | null>(null)
 	const { register, handleSubmit } = useForm<PostRegistrationBody>()
-	const { mutate, isPending } = useMutation({
+	const { mutate, isPending, isError } = useMutation({
 		mutationFn: (data: PostRegistrationBody) => {
 			return postRegistration(data)
 		},
 		onSuccess(data) {
-			console.log(data)
+			localStorage.setItem('accessToken', data.data.accessToken)
+			localStorage.setItem('userId', data.data.userId)
 			navigate('/')
 		},
 	})
@@ -80,11 +81,14 @@ export const RegistrationForm: React.FC<{ className?: string }> = ({
 						id='password'
 					/>
 				</form>
-				<ReCAPTCHA
-					onChange={token => setToken(token)}
-					className='mt-3'
-					sitekey='6LdCOv4pAAAAANL1-hNs7D7d5pzjz2xNjbR2QbNj'
-				/>
+				<div>
+					<ReCAPTCHA
+						onChange={token => setToken(token)}
+						className='mt-3'
+						sitekey='6LdCOv4pAAAAANL1-hNs7D7d5pzjz2xNjbR2QbNj'
+					/>
+					{isError && <div className='text-red-500 text-sm'>Ошибка</div>}
+				</div>
 			</CardContent>
 			<CardFooter className='h-full flex-col  gap-3 justify-between md:flex-row'>
 				<Button
