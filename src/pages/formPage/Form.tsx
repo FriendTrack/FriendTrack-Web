@@ -71,7 +71,7 @@ export const Form = ({ onSave, friends }: FormProps) => {
 	const [open, setOpen] = useState(false)
 	const [selectedFriend, setSelectedFriend] = useState<Contact | null>()
 	const [searchTerm, setSearchTerm] = useState('')
-
+	console.log(selectedFriend)
 	return (
 		<>
 			<NewContactDialog
