@@ -7,8 +7,8 @@ import {
 } from '@/components/ui/table'
 import { Contact } from '@/lib/api/requests/contact'
 import { useState } from 'react'
+import FriendAnalyticDialog from './ContactItemDialog'
 import ContactTableRow from './ContactTableRow'
-import FriendAnalyticDialog from './FriendAnalyticDialog'
 
 interface RatingList {
 	contacts: Contact[]
@@ -39,7 +39,7 @@ export const RatingList = ({ contacts, className }: RatingList) => {
 					</TableRow>
 				</TableHeader>
 				<TableBody>
-					{contacts.length &&
+					{contacts.length !== 0 &&
 						contacts.map(contact => (
 							<ContactTableRow
 								key={contact.id}

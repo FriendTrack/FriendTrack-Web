@@ -1,7 +1,9 @@
 import {
 	Contact,
+	ContactId,
 	PostContactCreateBody,
 	PutContactEdit,
+	deleteContactById,
 	putEditContactById,
 } from '@/lib/api/requests/contact'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
@@ -13,16 +15,27 @@ import { Textarea } from './textarea'
 
 interface EditDialogCardProps {
 	contact: Contact
+	onCloseDialog?: () => void
 }
 
-const EditDialogCard = ({ contact }: EditDialogCardProps) => {
+const EditDialogCard = ({ contact, onCloseDialog }: EditDialogCardProps) => {
 	const queryClient = useQueryClient()
-	const { mutate, isPending } = useMutation({
+	const { mutate: editContact, isPending: isEditing } = useMutation({
 		mutationFn: (data: PutContactEdit) => putEditContactById(data),
 		onSuccess: () => {
 			queryClient.invalidateQueries({
 				queryKey: ['contacts'],
 			})
+			if (onCloseDialog) onCloseDialog()
+		},
+	})
+	const { mutate: deleteContact, isPending: IsDeleting } = useMutation({
+		mutationFn: (id: ContactId) => deleteContactById(id),
+		onSuccess: () => {
+			queryClient.invalidateQueries({
+				queryKey: ['contacts'],
+			})
+			if (onCloseDialog) onCloseDialog()
 		},
 	})
 	const { register, watch, reset, setValue, handleSubmit } =
@@ -30,8 +43,7 @@ const EditDialogCard = ({ contact }: EditDialogCardProps) => {
 			defaultValues: { ...contact },
 		})
 	const onSubmit: SubmitHandler<PostContactCreateBody> = data => {
-		console.log(data)
-		mutate({
+		editContact({
 			id: contact.id,
 			body: data,
 		})
@@ -84,8 +96,15 @@ const EditDialogCard = ({ contact }: EditDialogCardProps) => {
 					placeholder='День рождения'
 					{...register('birthDate', { required: true })}
 				/>
-				<Button disabled={isPending} form='edit_contact_form'>
-					{isPending ? 'Изменение...' : 'Изменить'}
+				<Button disabled={isEditing} form='edit_contact_form'>
+					{isEditing ? 'Изменение...' : 'Изменить'}
+				</Button>
+				<Button
+					variant={'destructive'}
+					disabled={IsDeleting}
+					form='@'
+					onClick={() => deleteContact(contact.id)}>
+					{IsDeleting ? 'Удаление...' : 'Удалить'}
 				</Button>
 			</form>
 		</div>

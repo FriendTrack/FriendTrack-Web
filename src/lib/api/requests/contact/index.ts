@@ -45,3 +45,7 @@ export const postContact = (body: PostContactCreateBody) => {
 export const putEditContactById = ({ id, body }: PutContactEdit) => {
 	return $api.put<Contact>(`contact/${id}`, body)
 }
+
+export const deleteContactById = (id: ContactId) => {
+	return $api.delete(`contact/${id}`)
+}

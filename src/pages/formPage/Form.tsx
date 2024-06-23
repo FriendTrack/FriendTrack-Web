@@ -70,8 +70,6 @@ export const Form = ({ onSave, friends }: FormProps) => {
 	const [dialogIsOpen, setDialogIsOpen] = useState(false)
 	const [open, setOpen] = useState(false)
 	const [selectedFriend, setSelectedFriend] = useState<Contact | null>()
-	const [searchTerm, setSearchTerm] = useState('')
-	console.log(selectedFriend)
 	return (
 		<>
 			<NewContactDialog
@@ -116,7 +114,7 @@ export const Form = ({ onSave, friends }: FormProps) => {
 									</CommandEmpty>
 									<CommandGroup>
 										<ScrollArea className='h-[150px]'>
-											{friends.length &&
+											{friends.length !== 0 &&
 												friends.map(friend => (
 													<CommandItem
 														key={friend.id}

@@ -85,7 +85,7 @@ const FriendAnalyticDialog = ({
 						</div>
 					</TabsContent>
 					<TabsContent value='edit' className='border-0'>
-						<EditDialogCard contact={contact!} />
+						<EditDialogCard contact={contact!} onCloseDialog={onClose} />
 					</TabsContent>
 				</Tabs>
 			</DialogContent>
