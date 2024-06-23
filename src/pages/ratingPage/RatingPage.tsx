@@ -1,5 +1,5 @@
 import { useGetContacts } from '@/hooks/useGetContacts'
-import { RatingList } from './Components/RatingList'
+import RatingList from './Components/RatingList'
 
 export const RatingPage = () => {
 	const { data, isLoading } = useGetContacts()

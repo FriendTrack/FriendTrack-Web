@@ -2,7 +2,13 @@ import { ROUTES } from './ROUTES'
 
 const BASE_IMG_SRC = '/assets/drawerSVGs'
 
-export const PAGES = [
+interface Page {
+	path: string
+	imgSrc: string
+	title: string
+}
+
+export const PAGES: Page[] = [
 	{
 		path: ROUTES.FORM,
 		imgSrc: `${BASE_IMG_SRC}/form.svg`,

@@ -5,7 +5,8 @@ import { PAGES } from '@/lib/constants/Pages'
 import { useMutation } from '@tanstack/react-query'
 import { useState } from 'react'
 import { Outlet } from 'react-router-dom'
-import { AsideDivider, NavItem } from './Components'
+import AsideDivider from './Components/AsideDivider'
+import NavItem from './Components/NavItem'
 import Logout from '/assets/drawerSVGs/logout.svg'
 
 export const Layout = () => {
@@ -45,14 +46,14 @@ export const Layout = () => {
 				<div className='w-11/12 self-center text-end mt-5 text-lg'>name</div>
 				<AsideDivider />
 				<ul className='flex flex-col items-center text-sm mt-4 gap-3'>
-					{PAGES.map(({ path, imgSrc, title }, index) => (
+					{PAGES.map((item, index) => (
 						<NavItem
 							key={index}
-							current={page === path}
-							onClick={() => onNavLinkClick(path)}
-							to={path}
-							imgSrc={imgSrc}>
-							{title}
+							current={page === item.path}
+							onClick={() => onNavLinkClick(item.path)}
+							to={item.path}
+							imgSrc={item.imgSrc}>
+							{item.title}
 						</NavItem>
 					))}
 				</ul>

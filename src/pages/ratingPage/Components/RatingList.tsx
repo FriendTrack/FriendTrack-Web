@@ -15,7 +15,7 @@ interface RatingList {
 	className?: string
 }
 
-export const RatingList = ({ contacts, className }: RatingList) => {
+const RatingList = ({ contacts, className }: RatingList) => {
 	const [selectedContact, setSelectedContact] = useState<Contact | null>(null)
 	const [isOpen, setIsOpen] = useState(false)
 
@@ -55,3 +55,5 @@ export const RatingList = ({ contacts, className }: RatingList) => {
 		</>
 	)
 }
+
+export default RatingList
