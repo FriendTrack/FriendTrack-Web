@@ -38,7 +38,7 @@ const EditDialogCard = ({ contact, onCloseDialog }: EditDialogCardProps) => {
 			if (onCloseDialog) onCloseDialog()
 		},
 	})
-	const { register, watch, reset, setValue, handleSubmit } =
+	const { register, watch, setValue, handleSubmit } =
 		useForm<PostContactCreateBody>({
 			defaultValues: { ...contact },
 		})

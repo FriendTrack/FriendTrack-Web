@@ -23,7 +23,7 @@ export const NewContactDialog = ({ onCLose, open }: NewContactDialogProps) => {
 	const queryClient = useQueryClient()
 	const { register, setValue, watch, reset, handleSubmit } =
 		useForm<PostContactCreateBody>()
-	const { mutate, isPending, isError } = useMutation({
+	const { mutate, isPending } = useMutation({
 		mutationFn: (data: PostContactCreateBody) => postContact(data),
 		onSuccess: () => {
 			queryClient.invalidateQueries({
