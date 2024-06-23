@@ -25,6 +25,11 @@ export interface PostContactCreateBody {
 	birthDate: string
 }
 
+export interface PutContactEdit {
+	id: ContactId
+	body: PostContactCreateBody
+}
+
 export const getContactById = (id: ContactId) => {
 	return $api.get<Contact>(`contact/${id}`)
 }
@@ -35,4 +40,8 @@ export const getContacts = () => {
 
 export const postContact = (body: PostContactCreateBody) => {
 	return $api.post<Contact>(`contact`, body)
+}
+
+export const putEditContactById = ({ id, body }: PutContactEdit) => {
+	return $api.put<Contact>(`contact/${id}`, body)
 }

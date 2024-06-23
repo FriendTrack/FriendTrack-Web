@@ -29,6 +29,7 @@ export const NewContactDialog = ({ onCLose, open }: NewContactDialogProps) => {
 			queryClient.invalidateQueries({
 				queryKey: ['contacts'],
 			})
+			reset()
 			onCLose()
 		},
 	})
