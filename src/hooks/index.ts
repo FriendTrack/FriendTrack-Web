@@ -1,3 +1,3 @@
 export * from './useConfirmReloadPage'
-export * from './useGetFriends'
+export * from './useGetContacts'
 export * from './usePathname'

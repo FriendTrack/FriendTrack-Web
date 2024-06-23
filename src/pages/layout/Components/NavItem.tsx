@@ -8,7 +8,7 @@ interface NavItemProps {
 	current?: boolean
 	onClick?: () => void
 }
-export const NavItem = ({
+const NavItem = ({
 	to,
 	children,
 	className,
@@ -29,3 +29,5 @@ export const NavItem = ({
 		</li>
 	)
 }
+
+export default NavItem

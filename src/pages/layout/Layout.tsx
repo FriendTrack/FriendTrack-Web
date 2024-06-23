@@ -1,15 +1,20 @@
 import { Button } from '@/components/ui/button'
 import usePathname from '@/hooks/usePathname'
+import { PostLogoutBody, postLogout } from '@/lib/api/requests'
 import { PAGES } from '@/lib/constants/Pages'
-import { ROUTES } from '@/lib/constants/ROUTES'
+import { useMutation } from '@tanstack/react-query'
 import { useState } from 'react'
 import { Outlet } from 'react-router-dom'
-import { AsideDivider, NavItem } from './Components'
+import AsideDivider from './Components/AsideDivider'
+import NavItem from './Components/NavItem'
 import Logout from '/assets/drawerSVGs/logout.svg'
 
 export const Layout = () => {
 	const [isOpen, setIsOpen] = useState(false)
 	const { page, setPage } = usePathname()
+	const { mutate } = useMutation({
+		mutationFn: (data: PostLogoutBody) => postLogout(data),
+	})
 
 	const onNavLinkClick = (page: string) => {
 		setIsOpen(false)
@@ -41,21 +46,32 @@ export const Layout = () => {
 				<div className='w-11/12 self-center text-end mt-5 text-lg'>name</div>
 				<AsideDivider />
 				<ul className='flex flex-col items-center text-sm mt-4 gap-3'>
-					{PAGES.map(({ path, imgSrc, title }, index) => (
+					{PAGES.map((item, index) => (
 						<NavItem
 							key={index}
-							current={page === path}
-							onClick={() => onNavLinkClick(path)}
-							to={path}
-							imgSrc={imgSrc}>
-							{title}
+							current={page === item.path}
+							onClick={() => onNavLinkClick(item.path)}
+							to={item.path}
+							imgSrc={item.imgSrc}>
+							{item.title}
 						</NavItem>
 					))}
 				</ul>
 				<div className='mt-auto'>
 					<AsideDivider />
 					<ul className='mt-3'>
-						<NavItem to={ROUTES.LOGIN} imgSrc={Logout}>
+						<NavItem
+							imgSrc={Logout}
+							to={'/login'}
+							onClick={() => {
+								if (localStorage.getItem('userId')) {
+									mutate({
+										userId: localStorage.getItem('userId')!,
+									})
+								}
+								localStorage.removeItem('accessToken')
+								localStorage.removeItem('userId')
+							}}>
 							<span>Выйти</span>
 						</NavItem>
 					</ul>
