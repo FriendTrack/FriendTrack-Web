@@ -1,10 +1,4 @@
-import {
-	Table,
-	TableBody,
-	TableHead,
-	TableHeader,
-	TableRow,
-} from '@/components/ui/table'
+import { Table, TableBody, TableHead, TableHeader, TableRow } from '@/components/ui/table'
 import { Contact } from '@/lib/api/requests/contact'
 import { AverageRating, Rating } from '@/lib/api/requests/rating'
 import { useState } from 'react'
@@ -38,9 +32,7 @@ const RatingList = ({ contacts, rating, avgRating, className }: RatingList) => {
 					<TableRow>
 						<TableHead>Имя</TableHead>
 						<TableHead>Средний Рейтинг</TableHead>
-						<TableHead className='text-right'>
-							Последнее взаимодействие
-						</TableHead>
+						<TableHead className='text-right'>Последнее взаимодействие</TableHead>
 					</TableRow>
 				</TableHeader>
 				<TableBody>
@@ -48,7 +40,7 @@ const RatingList = ({ contacts, rating, avgRating, className }: RatingList) => {
 						avgRating.length !== 0 &&
 						rating.length !== 0 &&
 						contacts.map(contact => {
-							const avgRate = avgRating.find(r => (r.contactId = contact.id))
+							const avgRate = avgRating.find(r => r.contactId === contact.id)
 							if (!avgRate) return
 							return (
 								<ContactTableRow

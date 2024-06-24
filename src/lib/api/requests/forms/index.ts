@@ -1,7 +1,7 @@
 import $api from '../../instance'
 
 export interface ContactInteraction {
-	contactId: number
+	contactId: string
 	respect: number
 	time: number
 	trust: number

@@ -10,11 +10,7 @@ interface ContactTableRowProps {
 	avgRating: AverageRating
 }
 
-const ContactTableRow = ({
-	contact,
-	avgRating,
-	onCLick,
-}: ContactTableRowProps) => {
+const ContactTableRow = ({ contact, avgRating, onCLick }: ContactTableRowProps) => {
 	return (
 		<TableRow key={contact.id} onClick={onCLick}>
 			<TableCell>
@@ -26,21 +22,17 @@ const ContactTableRow = ({
 			<TableCell>
 				<div className='flex items-center gap-3'>
 					<BarChart3 className='h-4 w-4 opacity-50' />
-					<span>{avgRating.averageRating}</span>
+					<span>{avgRating.averageRating.toFixed(2)}</span>
 					{avgRating.averageRating > avgRating.oldAverageRating && (
 						<div className='flex gap-2 items-center text-green-500 '>
 							<TrendingUp className=' h-5 w-5 opacity-70' />
-							<span>
-								+{avgRating.averageRating - avgRating.oldAverageRating}
-							</span>
+							<span>+{(avgRating.averageRating - avgRating.oldAverageRating).toFixed(2)}</span>
 						</div>
 					)}
 					{avgRating.averageRating < avgRating.oldAverageRating && (
 						<div className='flex gap-2 items-center text-red-500 '>
 							<TrendingDown className=' h-5 w-5 opacity-70' />
-							<span>
-								{avgRating.averageRating - avgRating.oldAverageRating}
-							</span>
+							<span>{(avgRating.averageRating - avgRating.oldAverageRating).toFixed(2)}</span>
 						</div>
 					)}
 				</div>
@@ -49,7 +41,7 @@ const ContactTableRow = ({
 			<TableCell>
 				<div className='flex justify-end gap-4'>
 					<CalendarDays className='h-4 w-4 opacity-50' />
-					{contact.birthDate}
+					{avgRating.lastInteractionDate}
 				</div>
 			</TableCell>
 		</TableRow>
