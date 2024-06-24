@@ -70,12 +70,15 @@ export const Form = ({ onSave, friends }: FormProps) => {
 	const [dialogIsOpen, setDialogIsOpen] = useState(false)
 	const [open, setOpen] = useState(false)
 	const [selectedFriend, setSelectedFriend] = useState<Contact | null>()
+	console.log(selectedFriend)
 	return (
 		<>
-			<NewContactDialog
-				open={dialogIsOpen}
-				onCLose={() => setDialogIsOpen(false)}
-			/>
+			{dialogIsOpen && (
+				<NewContactDialog
+					open={dialogIsOpen}
+					onCLose={() => setDialogIsOpen(false)}
+				/>
+			)}
 			<Card className='flex flex-col w-full justify-items-center'>
 				<CardContent className='w-full'>
 					<Popover open={open} onOpenChange={setOpen}>

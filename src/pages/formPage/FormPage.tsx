@@ -1,5 +1,6 @@
 import { useConfirmReloadPage } from '@/hooks/useConfirmReloadPage'
 import { useGetContacts } from '@/hooks/useGetContacts'
+import { usePostForm } from '@/hooks/usePostForm'
 import { useSwiperForm } from '@/hooks/useSwiper'
 import { cn } from '@/lib/utils'
 import 'swiper/css'
@@ -13,6 +14,7 @@ export const FormPage = () => {
 	const { formsCount, setFormsCount, slidesOnPreview, swiperRef } =
 		useSwiperForm({ slidesOnPreview: 3 })
 	const { data, isLoading } = useGetContacts()
+	const { mutate } = usePostForm()
 
 	if (isLoading || !data) return <p>Loading...</p>
 	return (
