@@ -6,28 +6,33 @@ import {
 	TableRow,
 } from '@/components/ui/table'
 import { Contact } from '@/lib/api/requests/contact'
+import { AverageRating, Rating } from '@/lib/api/requests/rating'
 import { useState } from 'react'
 import FriendAnalyticDialog from './ContactItemDialog'
 import ContactTableRow from './ContactTableRow'
 
 interface RatingList {
 	contacts: Contact[]
+	rating: Rating[]
+	avgRating: AverageRating[]
 	className?: string
 }
 
-const RatingList = ({ contacts, className }: RatingList) => {
+const RatingList = ({ contacts, rating, avgRating, className }: RatingList) => {
 	const [selectedContact, setSelectedContact] = useState<Contact | null>(null)
 	const [isOpen, setIsOpen] = useState(false)
-
 	return (
 		<>
-			<FriendAnalyticDialog
-				isOpen={isOpen}
-				onClose={() => {
-					setIsOpen(false)
-				}}
-				contact={selectedContact}
-			/>
+			{selectedContact && (
+				<FriendAnalyticDialog
+					isOpen={isOpen}
+					onClose={() => {
+						setIsOpen(false)
+					}}
+					contact={selectedContact}
+					rating={rating.find(r => r.contactId === selectedContact?.id)!}
+				/>
+			)}
 			<Table className={className}>
 				<TableHeader>
 					<TableRow>
@@ -44,6 +49,7 @@ const RatingList = ({ contacts, className }: RatingList) => {
 							<ContactTableRow
 								key={contact.id}
 								contact={contact}
+								avgRating={avgRating.find(r => r.contactId === contact.id)!}
 								onCLick={() => {
 									setSelectedContact(contact)
 									setIsOpen(true)

@@ -2,24 +2,30 @@ import EditDialogCard from '@/components/ui/EditContactCard'
 import {
 	Dialog,
 	DialogContent,
-	DialogDescription,
 	DialogHeader,
 	DialogTitle,
 } from '@/components/ui/dialog'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Contact } from '@/lib/api/requests/contact'
+import { Rating } from '@/lib/api/requests/rating'
+import { Chart, RadialLinearScale } from 'chart.js'
+import { Radar } from 'react-chartjs-2'
 import ListElementAvatar from './ListElementAvatar'
+
+Chart.register(RadialLinearScale)
 
 interface FriendAnalyticDialogProps {
 	isOpen: boolean
 	onClose: () => void
 	contact: Contact | null
+	rating: Rating
 }
 
 const FriendAnalyticDialog = ({
 	isOpen,
 	onClose,
 	contact,
+	rating,
 }: FriendAnalyticDialogProps) => {
 	return (
 		<Dialog open={isOpen} onOpenChange={onClose}>
@@ -39,49 +45,49 @@ const FriendAnalyticDialog = ({
 								<DialogTitle className='text-lg font-semibold'>
 									{contact?.name}
 								</DialogTitle>
-								<DialogDescription className='text-sm text-slate-500'>
-									<span>Средний рейтинг: </span>
-									{1}
-								</DialogDescription>
 							</div>
 						</DialogHeader>
 						<div className='flex gap-6 flex-wrap'>
-							{/* <Radar
-						data={{
-							labels: [
-								'Коммуникация',
-								'Уважение',
-								'Доверие',
-								'Времяпрепровождение',
-								'Эмпатия',
-							],
-							datasets: [
-								{
-									label: friend?.name,
-									data: [
-										friend?.stats.communication,
-										friend?.stats.respect,
-										friend?.stats.trust,
-										friend?.stats.pastime,
-										friend?.stats.empathy,
+							<Radar
+								data={{
+									labels: [
+										'Коммуникация',
+										'Уважение',
+										'Доверие',
+										'Времяпрепровождение',
+										'Эмпатия',
 									],
-									backgroundColor: 'blue',
-								},
-							],
-						}}
-						options={{
-							scales: {
-								r: {
-									ticks: {
-										display: true,
-										stepSize: 1,
+									datasets: [
+										{
+											data: [
+												rating.communicationRating,
+												rating.respectRating,
+												rating.trustRating,
+												rating.timeRating,
+												rating.empathyRating,
+											],
+											backgroundColor: 'blue',
+										},
+									],
+								}}
+								options={{
+									scales: {
+										r: {
+											ticks: {
+												display: true,
+												stepSize: 1,
+											},
+											min: 0,
+											max: 5,
+										},
 									},
-									min: 0,
-									max: 5,
-								},
-							},
-						}}
-					/> */}
+									plugins: {
+										legend: {
+											display: false,
+										},
+									},
+								}}
+							/>
 						</div>
 					</TabsContent>
 					<TabsContent value='edit' className='border-0'>
