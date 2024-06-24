@@ -24,9 +24,9 @@ export const PAGES: Page[] = [
 		imgSrc: `${BASE_IMG_SRC}/trending-up.svg`,
 		title: 'Аналитика',
 	},
-	{
-		path: ROUTES.FIND,
-		imgSrc: `${BASE_IMG_SRC}/compass.svg`,
-		title: 'Найти друзей',
-	},
+	// {
+	// 	path: ROUTES.FIND,
+	// 	imgSrc: `${BASE_IMG_SRC}/compass.svg`,
+	// 	title: 'Найти друзей',
+	// },
 ]

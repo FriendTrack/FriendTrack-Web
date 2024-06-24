@@ -24,7 +24,7 @@ const router = createBrowserRouter(
 				/>
 				<Route path={ROUTES.RATING} element={<RatingPage />} />
 				<Route path={ROUTES.ANALYTIC} element={<AnalyticPage />} />
-				<Route path={ROUTES.FIND} element={<>find</>} />
+				{/* <Route path={ROUTES.FIND} element={<>find</>} /> */}
 			</Route>
 			<Route path={ROUTES.REGISTRATION} element={<RegistrationPage />} />
 			<Route path={ROUTES.LOGIN} element={<LoginPage />} />
