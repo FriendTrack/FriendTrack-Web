@@ -17,11 +17,11 @@ Chart.register(RadialLinearScale)
 interface FriendAnalyticDialogProps {
 	isOpen: boolean
 	onClose: () => void
-	contact: Contact | null
+	contact: Contact
 	rating: Rating
 }
 
-const FriendAnalyticDialog = ({
+const ContactItemDialog = ({
 	isOpen,
 	onClose,
 	contact,
@@ -60,11 +60,11 @@ const FriendAnalyticDialog = ({
 									datasets: [
 										{
 											data: [
-												rating.communicationRating,
-												rating.respectRating,
-												rating.trustRating,
-												rating.timeRating,
-												rating.empathyRating,
+												rating?.communicationRating,
+												rating?.respectRating,
+												rating?.trustRating,
+												rating?.timeRating,
+												rating?.empathyRating,
 											],
 											backgroundColor: 'blue',
 										},
@@ -99,4 +99,4 @@ const FriendAnalyticDialog = ({
 	)
 }
 
-export default FriendAnalyticDialog
+export default ContactItemDialog

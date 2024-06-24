@@ -8,7 +8,7 @@ import {
 import { Contact } from '@/lib/api/requests/contact'
 import { AverageRating, Rating } from '@/lib/api/requests/rating'
 import { useState } from 'react'
-import FriendAnalyticDialog from './ContactItemDialog'
+import ContactItemDialog from './ContactItemDialog'
 import ContactTableRow from './ContactTableRow'
 
 interface RatingList {
@@ -24,7 +24,7 @@ const RatingList = ({ contacts, rating, avgRating, className }: RatingList) => {
 	return (
 		<>
 			{selectedContact && (
-				<FriendAnalyticDialog
+				<ContactItemDialog
 					isOpen={isOpen}
 					onClose={() => {
 						setIsOpen(false)
@@ -45,17 +45,23 @@ const RatingList = ({ contacts, rating, avgRating, className }: RatingList) => {
 				</TableHeader>
 				<TableBody>
 					{contacts.length !== 0 &&
-						contacts.map(contact => (
-							<ContactTableRow
-								key={contact.id}
-								contact={contact}
-								avgRating={avgRating.find(r => r.contactId === contact.id)!}
-								onCLick={() => {
-									setSelectedContact(contact)
-									setIsOpen(true)
-								}}
-							/>
-						))}
+						avgRating.length !== 0 &&
+						rating.length !== 0 &&
+						contacts.map(contact => {
+							const avgRate = avgRating.find(r => (r.contactId = contact.id))
+							if (!avgRate) return
+							return (
+								<ContactTableRow
+									key={contact.id}
+									contact={contact}
+									avgRating={avgRate}
+									onCLick={() => {
+										setSelectedContact(contact)
+										setIsOpen(true)
+									}}
+								/>
+							)
+						})}
 				</TableBody>
 			</Table>
 		</>

@@ -1,12 +1,6 @@
-import {
-	Contact,
-	ContactId,
-	PostContactCreateBody,
-	PutContactEdit,
-	deleteContactById,
-	putEditContactById,
-} from '@/lib/api/requests/contact'
-import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { useDeleteContact } from '@/hooks/useDeleteContact'
+import { useEditContact } from '@/hooks/useEditContact'
+import { Contact, PostContactCreateBody } from '@/lib/api/requests/contact'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { Avatar, AvatarFallback, AvatarImage } from './avatar'
 import { Button } from './button'
@@ -19,25 +13,11 @@ interface EditDialogCardProps {
 }
 
 const EditDialogCard = ({ contact, onCloseDialog }: EditDialogCardProps) => {
-	const queryClient = useQueryClient()
-	const { mutate: editContact, isPending: isEditing } = useMutation({
-		mutationFn: (data: PutContactEdit) => putEditContactById(data),
-		onSuccess: () => {
-			queryClient.invalidateQueries({
-				queryKey: ['contacts'],
-			})
-			if (onCloseDialog) onCloseDialog()
-		},
-	})
-	const { mutate: deleteContact, isPending: IsDeleting } = useMutation({
-		mutationFn: (id: ContactId) => deleteContactById(id),
-		onSuccess: () => {
-			queryClient.invalidateQueries({
-				queryKey: ['contacts'],
-			})
-			if (onCloseDialog) onCloseDialog()
-		},
-	})
+	const { mutate: editContact, isPending: isEditing } =
+		useEditContact(onCloseDialog)
+	const { mutate: deleteContact, isPending: IsDeleting } =
+		useDeleteContact(onCloseDialog)
+
 	const { register, watch, setValue, handleSubmit } =
 		useForm<PostContactCreateBody>({
 			defaultValues: { ...contact },
