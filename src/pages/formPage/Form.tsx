@@ -146,12 +146,14 @@ export const Form = ({ onSave, friends }: FormProps) => {
 					))}
 				</CardContent>
 				<CardFooter>
-					<Button
-						className='bg-blue-600'
-						onClick={() => setOpenQuestions(openQuestions + 1)}
-						disabled={openQuestions === QUESTIONS.length || isSaved}>
-						{openQuestions === QUESTIONS.length ? 'Вопросы закончились' : 'Добавить вопрос'}
-					</Button>
+					{selectedFriend && (
+						<Button
+							className='bg-blue-600'
+							onClick={() => setOpenQuestions(openQuestions + 1)}
+							disabled={openQuestions === QUESTIONS.length || isSaved}>
+							{openQuestions === QUESTIONS.length ? 'Вопросы закончились' : 'Добавить вопрос'}
+						</Button>
+					)}
 					{openQuestions > 0 && selectedFriend?.id && (
 						<Button
 							className='ms-auto bg-green-600'
