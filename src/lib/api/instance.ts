@@ -7,7 +7,6 @@ const $api = axios.create({
 export default $api
 
 $api.interceptors.request.use(config => {
-	console.log(config)
 	const token = localStorage.getItem('accessToken')
 	if (token) {
 		config.headers.Authorization = `Bearer ${token}`
@@ -25,7 +24,7 @@ $api.interceptors.response.use(
 		if (error.response.status === 403) {
 			localStorage.removeItem('accessToken')
 			localStorage.removeItem('userId')
-			window.location.href = '/login'
+			//window.location.href = '/login'
 		}
 
 		return error

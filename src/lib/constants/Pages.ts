@@ -2,11 +2,22 @@ import { ROUTES } from './ROUTES'
 
 const BASE_IMG_SRC = '/assets/drawerSVGs'
 
-export const PAGES = [
+interface Page {
+	path: string
+	imgSrc: string
+	title: string
+}
+
+export const PAGES: Page[] = [
 	{
 		path: ROUTES.FORM,
-		imgSrc: `${BASE_IMG_SRC}/form.svg`,
+		imgSrc: `${BASE_IMG_SRC}/clipboard-edit.svg`,
 		title: 'Заполнить форму',
+	},
+	{
+		path: ROUTES.CREATED_FORM,
+		imgSrc: `${BASE_IMG_SRC}/clipboard-list.svg`,
+		title: 'Заполненные формы',
 	},
 	{
 		path: ROUTES.RATING,
@@ -15,12 +26,7 @@ export const PAGES = [
 	},
 	{
 		path: ROUTES.ANALYTIC,
-		imgSrc: `${BASE_IMG_SRC}/trending-up.svg`,
+		imgSrc: `${BASE_IMG_SRC}/bar-chart-3.svg`,
 		title: 'Аналитика',
-	},
-	{
-		path: ROUTES.FIND,
-		imgSrc: `${BASE_IMG_SRC}/compass.svg`,
-		title: 'Найти друзей',
 	},
 ]

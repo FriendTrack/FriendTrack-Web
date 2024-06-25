@@ -1,6 +1,6 @@
-import { PostContactCreateBody, postContact } from '@/lib/api/requests/contact'
+import { PostContactCreateBody } from '@/lib/api/requests/contact'
 
-import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { useCreateContact } from '@/hooks/useCreateContact'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { Avatar, AvatarFallback, AvatarImage } from './avatar'
 import { Button } from './button'
@@ -20,22 +20,15 @@ interface NewContactDialogProps {
 }
 
 export const NewContactDialog = ({ onCLose, open }: NewContactDialogProps) => {
-	const queryClient = useQueryClient()
 	const { register, setValue, watch, reset, handleSubmit } =
 		useForm<PostContactCreateBody>()
-	const { mutate, isPending, isError } = useMutation({
-		mutationFn: (data: PostContactCreateBody) => postContact(data),
-		onSuccess: () => {
-			queryClient.invalidateQueries({
-				queryKey: ['contacts'],
-			})
-			onCLose()
-		},
+	const { mutate, isPending } = useCreateContact(() => {
+		reset()
+		onCLose()
 	})
 
 	const handleFileChange = (e: any) => {
 		const file = e.target.files?.[0]
-		console.log(file)
 		if (file) {
 			const reader = new FileReader()
 			reader.onloadend = () => {
