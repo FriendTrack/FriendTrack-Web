@@ -10,21 +10,105 @@ import { Line } from 'react-chartjs-2';
 import { QualitiesDevelopment } from "../AnalyticPage";
 import { Select } from "@/components/ui/select";
 import { Label } from "@/components/ui/label";
+import { Avatar, AvatarImage, AvatarFallback } from "@radix-ui/react-avatar";
+import { Contact } from "@/lib/api/requests/contact";
+import { Button } from '@/components/ui/button'
+import {
+	Command,
+	CommandEmpty,
+	CommandGroup,
+	CommandInput,
+	CommandItem,
+	CommandList,
+} from '@/components/ui/command'
+import {
+	Popover,
+	PopoverContent,
+	PopoverTrigger,
+} from '@/components/ui/popover'
+import { ScrollArea } from '@/components/ui/scroll-area'
+import { cn } from '@/lib/utils'
+import { Check, ChevronsUpDown } from 'lucide-react'
+
+import { useState } from 'react'
 
 ChartJS.register(LinearScale, CategoryScale, PointElement, LineElement, Legend);
 
 interface QualitiesDevelopmentGraph {
     qualitiesDevelopment: QualitiesDevelopment;
+    friends: Contact[]
 }
 
-const QualitiesDevelopmentGraph = ({ qualitiesDevelopment }: QualitiesDevelopmentGraph) => {
+const QualitiesDevelopmentGraph = ({ qualitiesDevelopment, friends }: QualitiesDevelopmentGraph) => {
+    const [selectedFriend, setSelectedFriend] = useState<Contact | null>();
+    const [open, setOpen] = useState(false);
     return (
         <div>
             <div className="flex justify-between">
                 <div className="w-1/2 p-4">
-                    <Label>Выберите друга</Label>
-                    <Select options={[
-                    ]}></Select>
+                    <Popover open={open} onOpenChange={setOpen}>
+						<PopoverTrigger asChild>
+							<Button
+								variant='outline'
+								role='combobox'
+								aria-expanded={open}
+								className='w-full mt-6 border-0 border-b-2 rounded-none items-center justify-start pl-1 pr-1 '>
+								{selectedFriend ? (
+									<>
+										<Avatar className=' border scale-75 border-gray-400 items-center justify-center mr-2'>
+											<AvatarImage src={selectedFriend.link} />
+											<AvatarFallback>{selectedFriend.name[0]}</AvatarFallback>
+										</Avatar>
+										{
+											friends.find(
+												friend => friend.name === selectedFriend.name
+											)?.name
+										}
+									</>
+								) : (
+									'Выберите друга...'
+								)}
+								<ChevronsUpDown className='ml-auto h-5 w-5 ' />
+							</Button>
+						</PopoverTrigger>
+						<PopoverContent className='w-full'>
+							<Command>
+								<CommandInput placeholder='Поиск друга' />
+								<CommandList>
+									<CommandEmpty>
+									</CommandEmpty>
+									<CommandGroup>
+										<ScrollArea className='h-[150px]'>
+											{friends.length &&
+												friends.map(friend => (
+													<CommandItem
+														key={friend.id}
+														value={friend.name}
+														onSelect={() => {
+															setSelectedFriend(friend)
+															setOpen(false)
+														}}>
+														<Avatar className='items-center scale-75 border border-gray-400 justify-center me-1'>
+															<AvatarImage src={friend.link} />
+															<AvatarFallback>{friend.name[0]}</AvatarFallback>
+														</Avatar>
+														{friend.name}
+														<Check
+															className={cn(
+																'ms-auto h-5 w-5 mr-1',
+																selectedFriend?.name === friend.name
+																	? 'opacity-100'
+																	: 'opacity-0'
+															)}
+														/>
+													</CommandItem>
+												))}
+										</ScrollArea>
+									</CommandGroup>
+								</CommandList>
+							</Command>
+						</PopoverContent>
+					</Popover>
                 </div>
                 <div className="w-1/2 p-4">
                     <Label>Выберите период</Label>
