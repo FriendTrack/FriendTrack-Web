@@ -29,6 +29,7 @@ import {
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { cn } from '@/lib/utils'
 import { Check, ChevronsUpDown } from 'lucide-react'
+import { getQualitiesDev } from "@/lib/api/requests/qualitiesDevelopmentGraph";
 
 import { useState } from 'react'
 
@@ -36,12 +37,46 @@ ChartJS.register(LinearScale, CategoryScale, PointElement, LineElement, Legend);
 
 interface QualitiesDevelopmentGraph {
     qualitiesDevelopment: QualitiesDevelopment;
-    friends: Contact[]
+    friends: Contact[];
 }
 
-const QualitiesDevelopmentGraph = ({ qualitiesDevelopment, friends }: QualitiesDevelopmentGraph) => {
+const QualitiesDevelopmentGraph = ({ friends }: QualitiesDevelopmentGraph) => {
     const [selectedFriend, setSelectedFriend] = useState<Contact | null>();
+    const [selectedDate, setSelectedDate] = useState<string>();
     const [open, setOpen] = useState(false);
+
+    const [qualitiesDevelopment, setQualitiesDevelopment] = useState<QualitiesDevelopment>({
+        empathy: [],
+        communication: [],
+        respect: [],
+        pastime: [],
+        trust: [],
+        dates: []
+    });
+
+    const getQualitiesDevRequest = () => {
+        getQualitiesDev(selectedFriend!.id, { periodType: selectedDate! })
+        .then(response =>
+            {
+                qualitiesDevelopment.communication = [];
+                qualitiesDevelopment.empathy = [];
+                qualitiesDevelopment.trust = [];
+                qualitiesDevelopment.pastime = [];
+                qualitiesDevelopment.respect = [];
+                qualitiesDevelopment.dates = [];
+                for (let i = 0; i<response.data.length; i++)
+                {
+                    qualitiesDevelopment.empathy.push(response.data[i].empathyRating);
+                    qualitiesDevelopment.communication.push(response.data[i].communicationRating);
+                    qualitiesDevelopment.trust.push(response.data[i].trustRating);
+                    qualitiesDevelopment.pastime.push(response.data[i].timeRating);
+                    qualitiesDevelopment.respect.push(response.data[i].respectRating);
+                    qualitiesDevelopment.dates.push(response.data[i].lastInteractionDate);
+                }
+                setQualitiesDevelopment(qualitiesDevelopment);
+            });
+    }
+
     return (
         <div>
             <div className="flex justify-between">
@@ -85,8 +120,9 @@ const QualitiesDevelopmentGraph = ({ qualitiesDevelopment, friends }: QualitiesD
 														key={friend.id}
 														value={friend.name}
 														onSelect={() => {
-															setSelectedFriend(friend)
-															setOpen(false)
+															setSelectedFriend(friend);
+															setOpen(false);
+                                                            getQualitiesDevRequest();
 														}}>
 														<Avatar className='items-center scale-75 border border-gray-400 justify-center me-1'>
 															<AvatarImage src={friend.link} />
@@ -112,10 +148,10 @@ const QualitiesDevelopmentGraph = ({ qualitiesDevelopment, friends }: QualitiesD
                 </div>
                 <div className="w-1/2 p-4">
                     <Label>Выберите период</Label>
-                    <Select options={[
-                        { value: "week", label: "За последнюю неделю" },
-                        { value: "month", label: "За последний месяц"},
-                        { value: "6month", label: "За последние полгода"},
+                    <Select onChange={(selectedValue) => {setSelectedDate(selectedValue.target.value); getQualitiesDevRequest()}} options={[
+                        { value: "WEEK", label: "За последнюю неделю" },
+                        { value: "MONTH", label: "За последний месяц"},
+                        { value: "HALF_YEAR", label: "За последние полгода"},
                     ]}></Select>
                 </div>
             </div>
