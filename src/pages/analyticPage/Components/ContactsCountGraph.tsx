@@ -9,7 +9,7 @@ import { Line } from 'react-chartjs-2';
 import { ContactsCount } from "../AnalyticPage";
 import { Select } from "@/components/ui/select";
 import { Label } from "@/components/ui/label";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { subDays, subMonths } from 'date-fns';
 
 ChartJS.register(LinearScale, CategoryScale, PointElement, LineElement);
@@ -18,7 +18,7 @@ interface ContactsCountGraph {
     contactsCount: ContactsCount;
 }
 
-const ContactsCountGraph = () => {
+const ContactsCountGraph  = () => {
     const [contactsCount, setContactsCount] = useState<ContactsCount>({
         positive: [],
         negative: [],
@@ -33,7 +33,7 @@ const ContactsCountGraph = () => {
         const response = await fetch("http://89.111.155.61:9001/api/v1/rating?fieldType=ALL&calculationType=FORMS&toDate=" + queryParams.toDate, {
             headers: {
               'Content-Type': 'application/json',
-              'Authorization': 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI5ZjNkMDRhMS04MjNjLTQwNmMtOGRiNC04YWQ3NzFkYjgxODYiLCJsb2dpbiI6ImphbWFsIiwiaWF0IjoxNzE5MzE1MTQ0LCJleHAiOjE3MTk5MTk5NDR9.S3C1YtzLE_H9YQmumC2jz3ItsHWyfkDQGiC2K5bDiuQ'
+              'Authorization': 'Bearer ' + localStorage.getItem('accessToken'),
             }
           });
         if (response.ok) {
@@ -233,6 +233,14 @@ const ContactsCountGraph = () => {
                 
             }
     };
+
+    useEffect(() => {
+        loadData(); // Вызов метода загрузки данных после загрузки компонента
+      }, []);
+    
+      const loadData = () => {
+        onChange("week");
+      };
     
     return (
         <div>
