@@ -1,5 +1,6 @@
 import { ROUTES } from '@/lib/constants/ROUTES'
 import { AnalyticPage } from '@/pages/analyticPage/AnalyticPage'
+import CreatedFormPage from '@/pages/createdFormPage/CreatedFormPage'
 import { FormPage } from '@/pages/formPage/FormPage'
 import FormPageProvider from '@/pages/formPage/FormPageProvider'
 import { Layout } from '@/pages/layout/Layout'
@@ -22,7 +23,7 @@ const router = createBrowserRouter(
 						</FormPageProvider>
 					}
 				/>
-				<Route path={ROUTES.CREATED_FORM} element={<>created</>} />
+				<Route path={ROUTES.CREATED_FORM} element={<CreatedFormPage />} />
 				<Route path={ROUTES.RATING} element={<RatingPage />} />
 				<Route path={ROUTES.ANALYTIC} element={<AnalyticPage />} />
 			</Route>
