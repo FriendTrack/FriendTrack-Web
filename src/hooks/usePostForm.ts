@@ -8,6 +8,7 @@ export const usePostForm = (onSuccessCallback?: () => void) => {
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: ['averageRating'] })
 			queryClient.invalidateQueries({ queryKey: ['rating'] })
+			queryClient.invalidateQueries({ queryKey: ['createdForm'] })
 			if (onSuccessCallback) onSuccessCallback()
 		},
 	})
