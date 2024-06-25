@@ -12,8 +12,9 @@ interface AnalyticWindow {
     className?: string;
 }
 
-const AnalyticWindow = ({ contactsCount, qualitiesDevelopment, friends, className}: AnalyticWindow) => {
+const AnalyticWindow = ({ qualitiesDevelopment, friends, className}: AnalyticWindow) => {
     const [selectedGraph, setSelectedGraph] = useState(0);
+
     return (
         <Tabs className={className} defaultValue="tab1">
             <TabsList aria-label="Manage your account">
@@ -21,7 +22,7 @@ const AnalyticWindow = ({ contactsCount, qualitiesDevelopment, friends, classNam
                 <TabsTrigger className={selectedGraph==1 ? "bg-grey-100":""} onClick={() => {setSelectedGraph(1)}}value="tab2">Развитие аспектов общения</TabsTrigger>
             </TabsList>
             <TabsContent value="tab1">
-                <ContactsCountGraph contactsCount={contactsCount}></ContactsCountGraph>
+                <ContactsCountGraph></ContactsCountGraph>
             </TabsContent>
             <TabsContent value="tab2">
                 <QualitiesDevelopmentGraph qualitiesDevelopment={qualitiesDevelopment} friends={friends}></QualitiesDevelopmentGraph>
