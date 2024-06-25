@@ -3,6 +3,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { Contact } from '@/lib/api/requests/contact'
 import { ContactInteraction } from '@/lib/api/requests/forms'
 import { cn } from '@/lib/utils'
+import { DialogTitle } from '@radix-ui/react-dialog'
 import ListElementAvatar from '../ratingPage/Components/ListElementAvatar'
 
 interface CreatedFormDialogProps {
@@ -29,6 +30,7 @@ const CreatedFormDialog = ({ onOpenChange, open, interactions, contacts }: Creat
 	return (
 		<Dialog open={open} onOpenChange={onOpenChange}>
 			<DialogContent>
+				<DialogTitle className='hidden'></DialogTitle>
 				<Table>
 					<TableHeader>
 						<TableRow>
@@ -42,7 +44,7 @@ const CreatedFormDialog = ({ onOpenChange, open, interactions, contacts }: Creat
 							if (!contact) return
 
 							return (
-								<TableRow>
+								<TableRow key={inter.contactId}>
 									<TableCell className='flex gap-3 items-center'>
 										<ListElementAvatar name={contact.name[0]} src={contact.link} />
 										<span className='font-semibold'>{contact.name}</span>

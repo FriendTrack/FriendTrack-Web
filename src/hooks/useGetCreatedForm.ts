@@ -5,7 +5,7 @@ export const useGetCreatedForm = () => {
 	const { data, isLoading } = useQuery({
 		queryKey: ['createdForm'],
 		queryFn: () => getCreatedForm(),
-		select: data => data.data.reverse(),
+		select: data => data.data,
 	})
 
 	return { isLoading, data }

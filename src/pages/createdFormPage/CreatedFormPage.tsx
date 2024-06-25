@@ -35,17 +35,21 @@ const CreatedFormPage = () => {
 						</TableRow>
 					</TableHeader>
 					<TableBody className='w-full'>
-						{createdForm.map(form => (
-							<TableRow
-								className='w-full'
-								onClick={() => {
-									setSelectedForm(form)
-									setDialogIsOpen(true)
-								}}>
-								<TableCell>{form.interactionCount}</TableCell>
-								<TableCell className='text-right'>{form.date}</TableCell>
-							</TableRow>
-						))}
+						{createdForm
+							.slice()
+							.reverse()
+							.map((form, index) => (
+								<TableRow
+									key={index}
+									className='w-full'
+									onClick={() => {
+										setSelectedForm(form)
+										setDialogIsOpen(true)
+									}}>
+									<TableCell>{form.interactionCount}</TableCell>
+									<TableCell className='text-right'>{form.date}</TableCell>
+								</TableRow>
+							))}
 					</TableBody>
 				</Table>
 			</div>
