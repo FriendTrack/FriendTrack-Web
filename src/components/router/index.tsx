@@ -22,9 +22,9 @@ const router = createBrowserRouter(
 						</FormPageProvider>
 					}
 				/>
+				<Route path={ROUTES.CREATED_FORM} element={<>created</>} />
 				<Route path={ROUTES.RATING} element={<RatingPage />} />
 				<Route path={ROUTES.ANALYTIC} element={<AnalyticPage />} />
-				{/* <Route path={ROUTES.FIND} element={<>find</>} /> */}
 			</Route>
 			<Route path={ROUTES.REGISTRATION} element={<RegistrationPage />} />
 			<Route path={ROUTES.LOGIN} element={<LoginPage />} />
