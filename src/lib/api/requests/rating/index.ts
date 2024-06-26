@@ -6,11 +6,7 @@ export interface Pagination {
 	totalPages: number
 }
 
-enum CalculationType {
-	FORMS,
-	QUESTIONS,
-	ALL,
-}
+type CalculationType = 'FORMS' | 'QUESTIONS' | 'ALL'
 
 export interface Rating {
 	contactId: string

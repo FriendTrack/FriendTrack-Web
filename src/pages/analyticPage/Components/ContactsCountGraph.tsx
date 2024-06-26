@@ -1,16 +1,16 @@
+import { Label } from "@/components/ui/label"
+import { Select } from "@/components/ui/select"
 import {
+    CategoryScale,
     Chart as ChartJS,
     LineElement,
-    PointElement,
-    CategoryScale,
-    LinearScale
-} from "chart.js";
-import { Line } from 'react-chartjs-2';
-import { ContactsCount } from "../AnalyticPage";
-import { Select } from "@/components/ui/select";
-import { Label } from "@/components/ui/label";
-import { useState, useEffect } from "react";
-import { subDays, subMonths } from 'date-fns';
+    LinearScale,
+    PointElement
+} from "chart.js"
+import { subDays, subMonths } from 'date-fns'
+import { useEffect, useState } from "react"
+import { Line } from 'react-chartjs-2'
+import { ContactsCount } from "../AnalyticPage"
 
 ChartJS.register(LinearScale, CategoryScale, PointElement, LineElement);
 
@@ -29,8 +29,8 @@ const ContactsCountGraph  = () => {
     const negative: number[] = [0, 0, 0, 0, 0, 0, 0];
     let dates: string[] = [];
 
-    async function fetchData(queryParams) {
-        const response = await fetch("http://89.111.155.61:9001/api/v1/rating?fieldType=ALL&calculationType=FORMS&toDate=" + queryParams.toDate, {
+    async function fetchData(queryParams: any) {
+        const response = await fetch("http://89.111.155.61:9001/api/v1/rating?fieldType=ALL&size=1000&calculationType=FORMS&toDate=" + queryParams.toDate, {
             headers: {
               'Content-Type': 'application/json',
               'Authorization': 'Bearer ' + localStorage.getItem('accessToken'),
@@ -44,7 +44,7 @@ const ContactsCountGraph  = () => {
                     json.content[i].trustRating + 
                     json.content[i].timeRating + 
                     json.content[i].respectRating +
-                    json.content[i].empathyRating) / 5 > 2.5
+                    json.content[i].empathyRating) / 5 > 3
                 ){
                     positiveCount += 1;
                 }

@@ -4,7 +4,11 @@ import { useQuery } from '@tanstack/react-query'
 export const useGetRating = () => {
 	const { data, isLoading, error } = useQuery({
 		queryKey: ['rating'],
-		queryFn: () => getRating(),
+		queryFn: () =>
+			getRating({
+				size: 10000,
+				calculationType: 'FORMS',
+			}),
 		select: data => data.data.content,
 	})
 
