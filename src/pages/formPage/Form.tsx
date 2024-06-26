@@ -5,50 +5,16 @@ import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, Command
 import { Label } from '@/components/ui/label'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 import { ScrollArea } from '@/components/ui/scroll-area'
-import { Select } from '@/components/ui/select'
 import { cn } from '@/lib/utils'
 import { AvatarFallback, AvatarImage } from '@radix-ui/react-avatar'
 import { Check, ChevronsUpDown } from 'lucide-react'
 
 import { NewContactDialog } from '@/components/ui/NewContactDialog'
+import { Slider } from '@/components/ui/slider'
+import { useGetQuestionsContact } from '@/hooks/useGetQuestionsContact'
 import { Contact } from '@/lib/api/requests/contact'
 import { useContext, useState } from 'react'
 import { FormPageContext } from './FormPage'
-
-interface Question {
-	question: string
-}
-
-const ANSWER_VARIANTS = [
-	{
-		value: '1',
-		label: 'Да',
-	},
-	{
-		value: '2',
-		label: 'Скорее да',
-	},
-	{
-		value: '3',
-		label: 'Нет',
-	},
-	{
-		value: '4',
-		label: 'Скорее нет',
-	},
-	{
-		value: '5',
-		label: 'Затрудняюсь ответить',
-	},
-]
-
-const QUESTIONS: Question[] = [
-	{ question: 'Делились ли вы своими чувствами с этим человеком сегодня?' },
-	{ question: 'Чувствовали ли вы себя понятым этим человеком сегодня?' },
-	{ question: 'Чувствовали ли вы поддержку от этого человека?' },
-	{ question: 'Этот человек делился своими чувствами с вами сегодня?' },
-	{ question: 'Этот человек был внимателен к вашим потребностям сегодня?' },
-]
 
 interface FormProps {
 	onSave: () => void
@@ -61,7 +27,12 @@ export const Form = ({ onSave, friends }: FormProps) => {
 	const [dialogIsOpen, setDialogIsOpen] = useState(false)
 	const [open, setOpen] = useState(false)
 	const [selectedFriend, setSelectedFriend] = useState<Contact | null>()
-	console.log(contactInteractions)
+	const [c, setC] = useState(3)
+	const [e, setE] = useState(3)
+	const [r, setR] = useState(3)
+	const [t, setT] = useState(3)
+	const [tr, setTr] = useState(3)
+	const { data: questions, isLoading } = useGetQuestionsContact(selectedFriend?.id)
 	return (
 		<>
 			{dialogIsOpen && <NewContactDialog open={dialogIsOpen} onCLose={() => setDialogIsOpen(false)} />}
@@ -137,38 +108,41 @@ export const Form = ({ onSave, friends }: FormProps) => {
 							</Command>
 						</PopoverContent>
 					</Popover>
-
-					{QUESTIONS.slice(0, openQuestions).map((question, index) => (
-						<div className='mt-3' key={index}>
-							<Label className='text-1xl'>{question.question}</Label>
-							<Select options={ANSWER_VARIANTS} disabled={isSaved} />
-						</div>
-					))}
+					{isLoading && <p className='text-1xl'>Загрузка...</p>}
+					{questions &&
+						questions.map((question, index) => (
+							<div className='mt-4' key={index}>
+								<Label className='text-md'>{question.question}</Label>
+								<Slider
+									min={0}
+									max={5}
+									defaultValue={[3]}
+									onValueChange={value => {
+										if (index === 0) setC(value[0])
+										if (index === 1) setE(value[0])
+										if (index === 2) setR(value[0])
+										if (index === 3) setT(value[0])
+										if (index === 4) setTr(value[0])
+									}}
+								/>
+							</div>
+						))}
 				</CardContent>
 				<CardFooter>
-					{selectedFriend && (
-						<Button
-							className='bg-blue-600'
-							onClick={() => setOpenQuestions(openQuestions + 1)}
-							disabled={openQuestions === QUESTIONS.length || isSaved}>
-							{openQuestions === QUESTIONS.length ? 'Вопросы закончились' : 'Добавить вопрос'}
-						</Button>
-					)}
-					{openQuestions > 0 && selectedFriend?.id && (
+					{selectedFriend?.id && (
 						<Button
 							className='ms-auto bg-green-600'
 							disabled={isSaved}
 							onClick={() => {
-								const rand = (min: number, max: number) => min + Math.random() * (max + 1 - min)
 								setIsSaved(true)
 								onSave()
 								addForm({
 									contactId: selectedFriend?.id,
-									communication: Number(rand(0, 4).toFixed(0)),
-									empathy: Number(rand(0, 4).toFixed(0)),
-									respect: Number(rand(0, 4).toFixed(0)),
-									time: Number(rand(0, 4).toFixed(0)),
-									trust: Number(rand(0, 4).toFixed(0)),
+									communication: c,
+									empathy: e,
+									respect: r,
+									time: t,
+									trust: tr,
 								})
 							}}>
 							Сохранить
