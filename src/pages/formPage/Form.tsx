@@ -10,11 +10,11 @@ import { AvatarFallback, AvatarImage } from '@radix-ui/react-avatar'
 import { Check, ChevronsUpDown } from 'lucide-react'
 
 import { NewContactDialog } from '@/components/ui/NewContactDialog'
-import { Slider } from '@/components/ui/slider'
 import { useGetQuestionsContact } from '@/hooks/useGetQuestionsContact'
 import { Contact } from '@/lib/api/requests/contact'
 import { useContext, useState } from 'react'
 import { FormPageContext } from './FormPage'
+import Slider from './components/Slider'
 
 interface FormProps {
 	onSave: () => void
@@ -114,15 +114,14 @@ export const Form = ({ onSave, friends }: FormProps) => {
 							<div className='mt-4' key={index}>
 								<Label className='text-md'>{question.question}</Label>
 								<Slider
-									min={0}
-									max={5}
-									defaultValue={[3]}
-									onValueChange={value => {
-										if (index === 0) setC(value[0])
-										if (index === 1) setE(value[0])
-										if (index === 2) setR(value[0])
-										if (index === 3) setT(value[0])
-										if (index === 4) setTr(value[0])
+									value={index === 0 ? c : index === 1 ? e : index === 2 ? r : index === 3 ? t : index === 4 ? tr : 0}
+									className='w-full mt-1'
+									onChange={value => {
+										if (index === 0) setC(Number(value.target.value))
+										if (index === 1) setE(Number(value.target.value))
+										if (index === 2) setR(Number(value.target.value))
+										if (index === 3) setT(Number(value.target.value))
+										if (index === 4) setTr(Number(value.target.value))
 									}}
 								/>
 							</div>
