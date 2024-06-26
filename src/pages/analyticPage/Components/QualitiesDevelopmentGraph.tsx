@@ -41,7 +41,6 @@ const QualitiesDevelopmentGraph = ({ friends }: QualitiesDevelopmentGraph) => {
 
 	useEffect(() => {
 		getQualitiesDevRequest()
-		console.log(selectedFriend, selectedDate)
 	}, [selectedFriend, selectedDate])
 
 	const getQualitiesDevRequest = () => {
