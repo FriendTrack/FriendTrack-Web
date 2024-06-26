@@ -12,7 +12,8 @@ import { Select } from "@/components/ui/select";
 import { Label } from "@/components/ui/label";
 import { Avatar, AvatarImage, AvatarFallback } from "@radix-ui/react-avatar";
 import { Contact } from "@/lib/api/requests/contact";
-import { Button } from '@/components/ui/button'
+import { Button } from '@/components/ui/button';
+import RecommendationBadge from "./Recommendation";
 import {
 	Command,
 	CommandEmpty,
@@ -29,19 +30,61 @@ import {
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { cn } from '@/lib/utils'
 import { Check, ChevronsUpDown } from 'lucide-react'
+import { getQualitiesDev } from "@/lib/api/requests/qualitiesDevelopmentGraph";
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 ChartJS.register(LinearScale, CategoryScale, PointElement, LineElement, Legend);
 
 interface QualitiesDevelopmentGraph {
     qualitiesDevelopment: QualitiesDevelopment;
-    friends: Contact[]
+    friends: Contact[];
 }
 
-const QualitiesDevelopmentGraph = ({ qualitiesDevelopment, friends }: QualitiesDevelopmentGraph) => {
+const QualitiesDevelopmentGraph = ({ friends }: QualitiesDevelopmentGraph) => {
     const [selectedFriend, setSelectedFriend] = useState<Contact | null>();
+    const [selectedDate, setSelectedDate] = useState<string>("WEEK");
+    const [recommendation, setRecommendation] = useState<string | null>();
     const [open, setOpen] = useState(false);
+
+    const [qualitiesDevelopment, setQualitiesDevelopment] = useState<QualitiesDevelopment>({
+        empathy: [],
+        communication: [],
+        respect: [],
+        pastime: [],
+        trust: [],
+        dates: []
+    });
+
+    useEffect(() => {
+        getQualitiesDevRequest();
+        console.log(selectedFriend, selectedDate);
+      }, [selectedFriend, selectedDate]);
+
+    const getQualitiesDevRequest = () => {
+        if (selectedFriend && selectedFriend.id && selectedDate) getQualitiesDev(selectedFriend!.id, { periodType: selectedDate! })
+        .then(response =>
+            {
+                let communication = [];
+                let empathy = [];
+                let trust = [];
+                let pastime = [];
+                let respect = [];
+                let dates = [];
+                for (let i = 0; i<response.data.length; i++)
+                {
+                    empathy.push(response.data[i].empathyRating);
+                    communication.push(response.data[i].communicationRating);
+                    trust.push(response.data[i].trustRating);
+                    pastime.push(response.data[i].timeRating);
+                    respect.push(response.data[i].respectRating);
+                    dates.push(response.data[i].lastInteractionDate);
+                }
+                setRecommendation(response.data[response.data.length-1].title + ": " + response.data[response.data.length-1].description);
+                setQualitiesDevelopment({empathy: empathy, trust: trust, communication: communication, pastime: pastime, respect: respect, dates: dates});
+            });
+    }
+
     return (
         <div>
             <div className="flex justify-between">
@@ -85,8 +128,8 @@ const QualitiesDevelopmentGraph = ({ qualitiesDevelopment, friends }: QualitiesD
 														key={friend.id}
 														value={friend.name}
 														onSelect={() => {
-															setSelectedFriend(friend)
-															setOpen(false)
+															setSelectedFriend(friend);
+															setOpen(false);
 														}}>
 														<Avatar className='items-center scale-75 border border-gray-400 justify-center me-1'>
 															<AvatarImage src={friend.link} />
@@ -112,10 +155,10 @@ const QualitiesDevelopmentGraph = ({ qualitiesDevelopment, friends }: QualitiesD
                 </div>
                 <div className="w-1/2 p-4">
                     <Label>Выберите период</Label>
-                    <Select options={[
-                        { value: "week", label: "За последнюю неделю" },
-                        { value: "month", label: "За последний месяц"},
-                        { value: "6month", label: "За последние полгода"},
+                    <Select onChange={(selectedValue) => {setSelectedDate(selectedValue.target.value);}} options={[
+                        { value: "WEEK", label: "За последнюю неделю" },
+                        { value: "MONTH", label: "За последний месяц"},
+                        { value: "HALF_YEAR", label: "За последние полгода"},
                     ]}></Select>
                 </div>
             </div>
@@ -173,12 +216,18 @@ const QualitiesDevelopmentGraph = ({ qualitiesDevelopment, friends }: QualitiesD
                 options={{
                     scales: {
                         y: {
-                            min: 1,
+                            min: 0,
                             max: 5,
                         }
                     }
                 }}
                 />
+                {
+                    recommendation === undefined ? "" : (<div className="p-3">
+                        <div className="p-2">Рекомендация</div>
+                        <RecommendationBadge recommendationText={recommendation!}></RecommendationBadge>
+                    </div>) 
+                }
         </div>
     );
 };
