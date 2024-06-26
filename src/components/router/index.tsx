@@ -13,7 +13,7 @@ const router = createBrowserRouter(
 	createRoutesFromElements(
 		<>
 			<Route path='/' element={<Layout />}>
-				<Route index element={<>root</>} />
+				<Route index element={<Navigate to={ROUTES.RATING} replace />} />
 
 				<Route
 					path={ROUTES.FORM}
