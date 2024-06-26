@@ -18,3 +18,11 @@ export interface PostFormBody {
 export const postForm = (body: PostFormBody) => {
 	return $api.post('form', body)
 }
+
+export const getCreatedForm = () => {
+	return $api.get<PostFormBody[]>('form', {
+		params: {
+			size: 10000,
+		},
+	})
+}

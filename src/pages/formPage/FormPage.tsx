@@ -40,6 +40,8 @@ export const FormPage = () => {
 			mousewheel
 			slidesPerView={slidesOnPreview}
 			pagination={{ clickable: true }}
+			preventClicks={false}
+			preventClicksPropagation={false}
 			onSwiper={swiper => {
 				swiperRef.current = swiper
 			}}
