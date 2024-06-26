@@ -20,7 +20,7 @@ const StatSpan = ({ statName, stat }: StatSpanProps) => {
 	return (
 		<div className=' flex gap-1'>
 			<span className='font-semibold'>{statName}</span>
-			<span className={cn('text-green-500 font-semibold', stat < 2 && 'text-red-500', stat === 3 && 'text-amber-600')}>
+			<span className={cn('text-green-500 font-semibold', stat < 3 && 'text-red-500', stat === 3 && 'text-amber-600')}>
 				{stat}
 			</span>
 		</div>
