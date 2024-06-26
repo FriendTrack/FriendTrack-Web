@@ -12,7 +12,8 @@ import { Select } from "@/components/ui/select";
 import { Label } from "@/components/ui/label";
 import { Avatar, AvatarImage, AvatarFallback } from "@radix-ui/react-avatar";
 import { Contact } from "@/lib/api/requests/contact";
-import { Button } from '@/components/ui/button'
+import { Button } from '@/components/ui/button';
+import RecommendationBadge from "./Recommendation";
 import {
 	Command,
 	CommandEmpty,
@@ -31,7 +32,7 @@ import { cn } from '@/lib/utils'
 import { Check, ChevronsUpDown } from 'lucide-react'
 import { getQualitiesDev } from "@/lib/api/requests/qualitiesDevelopmentGraph";
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 ChartJS.register(LinearScale, CategoryScale, PointElement, LineElement, Legend);
 
@@ -42,7 +43,8 @@ interface QualitiesDevelopmentGraph {
 
 const QualitiesDevelopmentGraph = ({ friends }: QualitiesDevelopmentGraph) => {
     const [selectedFriend, setSelectedFriend] = useState<Contact | null>();
-    const [selectedDate, setSelectedDate] = useState<string>();
+    const [selectedDate, setSelectedDate] = useState<string>("WEEK");
+    const [recommendation, setRecommendation] = useState<string | null>();
     const [open, setOpen] = useState(false);
 
     const [qualitiesDevelopment, setQualitiesDevelopment] = useState<QualitiesDevelopment>({
@@ -54,26 +56,32 @@ const QualitiesDevelopmentGraph = ({ friends }: QualitiesDevelopmentGraph) => {
         dates: []
     });
 
+    useEffect(() => {
+        getQualitiesDevRequest();
+        console.log(selectedFriend, selectedDate);
+      }, [selectedFriend, selectedDate]);
+
     const getQualitiesDevRequest = () => {
-        getQualitiesDev(selectedFriend!.id, { periodType: selectedDate! })
+        if (selectedFriend && selectedFriend.id && selectedDate) getQualitiesDev(selectedFriend!.id, { periodType: selectedDate! })
         .then(response =>
             {
-                qualitiesDevelopment.communication = [];
-                qualitiesDevelopment.empathy = [];
-                qualitiesDevelopment.trust = [];
-                qualitiesDevelopment.pastime = [];
-                qualitiesDevelopment.respect = [];
-                qualitiesDevelopment.dates = [];
+                let communication = [];
+                let empathy = [];
+                let trust = [];
+                let pastime = [];
+                let respect = [];
+                let dates = [];
                 for (let i = 0; i<response.data.length; i++)
                 {
-                    qualitiesDevelopment.empathy.push(response.data[i].empathyRating);
-                    qualitiesDevelopment.communication.push(response.data[i].communicationRating);
-                    qualitiesDevelopment.trust.push(response.data[i].trustRating);
-                    qualitiesDevelopment.pastime.push(response.data[i].timeRating);
-                    qualitiesDevelopment.respect.push(response.data[i].respectRating);
-                    qualitiesDevelopment.dates.push(response.data[i].lastInteractionDate);
+                    empathy.push(response.data[i].empathyRating);
+                    communication.push(response.data[i].communicationRating);
+                    trust.push(response.data[i].trustRating);
+                    pastime.push(response.data[i].timeRating);
+                    respect.push(response.data[i].respectRating);
+                    dates.push(response.data[i].lastInteractionDate);
                 }
-                setQualitiesDevelopment(qualitiesDevelopment);
+                setRecommendation(response.data[response.data.length-1].title + ": " + response.data[response.data.length-1].description);
+                setQualitiesDevelopment({empathy: empathy, trust: trust, communication: communication, pastime: pastime, respect: respect, dates: dates});
             });
     }
 
@@ -122,7 +130,6 @@ const QualitiesDevelopmentGraph = ({ friends }: QualitiesDevelopmentGraph) => {
 														onSelect={() => {
 															setSelectedFriend(friend);
 															setOpen(false);
-                                                            getQualitiesDevRequest();
 														}}>
 														<Avatar className='items-center scale-75 border border-gray-400 justify-center me-1'>
 															<AvatarImage src={friend.link} />
@@ -148,7 +155,7 @@ const QualitiesDevelopmentGraph = ({ friends }: QualitiesDevelopmentGraph) => {
                 </div>
                 <div className="w-1/2 p-4">
                     <Label>Выберите период</Label>
-                    <Select onChange={(selectedValue) => {setSelectedDate(selectedValue.target.value); getQualitiesDevRequest()}} options={[
+                    <Select onChange={(selectedValue) => {setSelectedDate(selectedValue.target.value);}} options={[
                         { value: "WEEK", label: "За последнюю неделю" },
                         { value: "MONTH", label: "За последний месяц"},
                         { value: "HALF_YEAR", label: "За последние полгода"},
@@ -209,12 +216,18 @@ const QualitiesDevelopmentGraph = ({ friends }: QualitiesDevelopmentGraph) => {
                 options={{
                     scales: {
                         y: {
-                            min: 1,
+                            min: 0,
                             max: 5,
                         }
                     }
                 }}
                 />
+                {
+                    recommendation === undefined ? "" : (<div className="p-3">
+                        <div className="p-2">Рекомендация</div>
+                        <RecommendationBadge recommendationText={recommendation!}></RecommendationBadge>
+                    </div>) 
+                }
         </div>
     );
 };

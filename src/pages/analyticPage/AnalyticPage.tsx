@@ -1,5 +1,4 @@
 import AnalyticWindow from './Components/AnalyticWindow'
-import { Contact } from '@/lib/api/requests/contact'
 import { useGetContacts } from '@/hooks/useGetContacts'
 
 export interface QualitiesDevelopment {
