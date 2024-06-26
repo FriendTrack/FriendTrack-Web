@@ -8,14 +8,7 @@ interface NavItemProps {
 	current?: boolean
 	onClick?: () => void
 }
-const NavItem = ({
-	to,
-	children,
-	className,
-	imgSrc,
-	current,
-	onClick,
-}: NavItemProps) => {
+const NavItem = ({ to, children, className, imgSrc, current, onClick }: NavItemProps) => {
 	return (
 		<li onClick={onClick} className={`w-full `}>
 			<NavLink
