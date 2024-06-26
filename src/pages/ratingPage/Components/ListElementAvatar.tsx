@@ -1,5 +1,4 @@
-import { Avatar } from '@/components/ui/avatar'
-import { AvatarFallback, AvatarImage } from '@radix-ui/react-avatar'
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 
 interface ListElementAvatarProps {
 	name: string
