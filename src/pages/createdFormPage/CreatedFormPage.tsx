@@ -38,6 +38,7 @@ const CreatedFormPage = () => {
 						{createdForm
 							.slice()
 							.reverse()
+							.filter(f => f.contactInteractions.length !== 0)
 							.map((form, index) => (
 								<TableRow
 									key={index}
